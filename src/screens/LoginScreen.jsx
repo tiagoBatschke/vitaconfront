@@ -28,10 +28,10 @@ const LoginScreen = () => {
       <div className='flex flex-col items-start justify-center w-[35%] h-[100vh] '>
         <h2 className='text-[1rem] font-bold text-[#a0a0a0]'>SIGN IN BELOW:</h2>
         <form className='h-[40vh] w-[100%] flex flex-col justify-evenly' onSubmit={handleLogin}>
-          <div className='flex flex-col w-[80%]  p-1 items-start  border-[1px] border-[#C4C4C4]'>
-            <label className='text-[0.7rem]' htmlFor="">E-mail</label>
-            <input className='w-[80%] ml-[0%] h-[3vh]   outline-none' placeholder='E-mail' type="text" value={email} onChange={(e) => { setEmail(e.target.value) }} />
-          </div>
+        <div className='flex flex-col w-[80%]  p-1 items-start  border-[1px] border-[#C4C4C4]'>
+        <label className='text-[0.7rem]' htmlFor="">E-mail</label>
+        <input  className='w-[80%] ml-[0%] h-[3vh]   outline-none' placeholder='E-mail' type="text" value={email} onChange={(e)=>{setEmail(e.target.value)}}></input>
+      </div>
           <div className='flex flex-col w-[80%]  p-1 items-start  border-[1px] border-[#C4C4C4]'>
             <label className='text-[0.7rem]' htmlFor="">Password</label>
             <input className='w-[80%] ml-[0%] h-[3vh]   outline-none' placeholder='Password' type="text" value={password} onChange={(e) => { setPassword(e.target.value) }} />
