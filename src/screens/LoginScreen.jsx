@@ -10,7 +10,7 @@ const LoginScreen = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login', { 'email': email, 'password': password });
+      const response = await axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/login', { 'email': email, 'password': password });
       console.log(response.data); // Imprime a resposta do servidor
       setEmail('');
       setPassword('');
