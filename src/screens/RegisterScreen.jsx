@@ -27,9 +27,9 @@ const RegisterScreen = () => {
 
   return (
     <div className='flex justify-evenly w-[100vw]'>
-    <div className='h-[100vh] w-[60%]  flex flex-col items-center justify-center'>
-      <img className='w-[90%] ' src="src\assets\VitaconLogin.jpg" alt="" />
-    </div>
+   <div className='h-[100vh] w-[60%]  flex flex-col items-center justify-center'>
+        <img className='w-[90%] ' src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/VitaconLogin.jpg?raw=true" alt="" />
+      </div>
     <div className='flex flex-col items-start justify-center w-[35%] h-[100vh] '>
       <h2 className='text-[1rem] font-bold text-[#a0a0a0]'>SIGN IN BELOW:</h2>
       <form className='h-[40vh] w-[100%] flex flex-col justify-evenly' onSubmit={handleRegister}>
