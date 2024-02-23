@@ -40,6 +40,7 @@ const LoginScreen = () => {
             <input type="checkbox" />
             <label className='text-[1rem] text-[#a0a0a0]' htmlFor="">Remember me</label>
           </div>
+            <Link to='/Register' className='text-[1rem] text-[#a0a0a0]' htmlFor="">Sign up</Link>
           <button type='submit' className='bg-[#58A5F5] flex justify-center items-center text-white h-[2rem] w-[15%] rounded-sm'>Login</button>
         </form>
       </div>
