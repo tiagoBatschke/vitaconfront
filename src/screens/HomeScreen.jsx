@@ -11,10 +11,10 @@ const HomeScreen = () => {
       <div className='w-[100%]'>
         <div className='w-[100%] h-[10vh] bg-[#F9F9F9] border-b flex '>
           <div className='w-[95%] flex items-center justify-between'>
-            <img src="src\assets\votacon_logo.jpg" className='w-[15%] h-[8vh] ' alt="" />
+            <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/votacon_logo.jpg?raw=true" className='w-[15%] h-[8vh] ' alt="" />
             <div className='flex items-center justify-between w-[4%] hover:cursor-pointer'>
-              <img src="src\assets\icon-Png.png" className='w-[3rem] h-[3rem]' alt="" />
-              <img src="src\assets\down.png" className='w-[0.8rem] h-[0.8rem]' alt="" />
+              <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
+              <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/down.png?raw=true" className='w-[0.8rem] h-[0.8rem]' alt="" />
             </div>
           </div>
         </div>
@@ -22,13 +22,13 @@ const HomeScreen = () => {
           <div className='flex flex-col  h-[90vh] w-[17%] bg-[#283138]'>
             <div className=' bg-[#2c4267b6] hover:cursor-pointer  hover:font-bold flex items-center justify-between  w-[100%] h-[5rem]'>
               <div className='flex items-center ml-[10%] w-[80%]'>
-                <img src="src\assets\icon-Png.png" className='w-[3rem] h-[3rem]' alt="" />
+                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
                 <Link  className=' text-white text-[1.3rem] ml-[5%]'>Fernando</Link>
               </div>
             </div>
             <div className=' hover:cursor-pointer  hover:font-bold flex items-center justify-between  w-[100%] h-[3rem]'>
               <div className='flex items-center ml-[10%] w-[80%]'>
-                <img src="src\assets\ship_icon.png" className='w-[2rem] h-[2rem] ml-[0.5rem]' alt="" />
+                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/ship_icon.png?raw=true" className='w-[2rem] h-[2rem] ml-[0.5rem]' alt="" />
                 <Link  className=' text-[#ffffff93] ml-[10%]'>Dashboard</Link>
               </div>
             </div>
