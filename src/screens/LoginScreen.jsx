@@ -23,7 +23,7 @@ const LoginScreen = () => {
   return (
     <div className='flex justify-evenly w-[100vw]'>
       <div className='h-[100vh] w-[60%]  flex flex-col items-center justify-center'>
-        <img className='w-[90%] ' src="src\assets\VitaconLogin.jpg" alt="" />
+        <img className='w-[90%] ' src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fsuperdominios.org%2Fwp-content%2Fuploads%2F2019%2F06%2Fdominio-online.jpg&tbnid=AidZXz-NtADR9M&vet=12ahUKEwiyoouyjsKEAxVyK7kGHSrjB1UQMygAegQIARBU..i&imgrefurl=https%3A%2F%2Fsuperdominios.org%2Fdominios%2Fonline%2F&docid=cxPo7Pf_Tz8iPM&w=580&h=199&q=imagem%20online&ved=2ahUKEwiyoouyjsKEAxVyK7kGHSrjB1UQMygAegQIARBU" alt="" />
       </div>
       <div className='flex flex-col items-start justify-center w-[35%] h-[100vh] '>
         <h2 className='text-[1rem] font-bold text-[#a0a0a0]'>SIGN IN BELOW:</h2>
