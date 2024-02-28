@@ -14,33 +14,16 @@ const HomeScreen = () => {
   const [inativo, setInativo]= useState(false)
   const [logo, setLogo]= useState('')
   const [clientesStyled, setClientesStyled]= useState(null)
-  const [user, setUser] =useState()
   const [screen, setScreen] =useState()
   const [clientes, setClientes] =useState(null)
   const navigate = useNavigate()
 
 
 
-  const { token, setToken } = useContext(AuthContext);
+  const  token = localStorage.getItem('token')
+  const  user = localStorage.getItem('user')
 
-  function fetchData() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/user',  {
-      withCredentials: true,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        setUser(response.data)
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    });
-
-    
-}
-  
   function fetchClientes() {
 
     axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
@@ -62,6 +45,29 @@ const HomeScreen = () => {
 
 function createCliente() {
     axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
+        nome: nome,
+        cnpj: cnpj,
+        contato: contato,
+        email: email,
+        telefone: telefone,
+        celular: '11111',
+        status: ativo === true ? 'ativo' : 'inativo',
+    }, {
+        withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+       setScreen('')
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
+}
+
+function createCliente() {
+    axios.put('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
         nome: nome,
         cnpj: cnpj,
         contato: contato,
@@ -118,7 +124,6 @@ function createCliente() {
       }));
     }
     
-    
   }, [clientes]);
 
   const handleAtivoClick = () => {
@@ -147,7 +152,7 @@ function createCliente() {
             <div className=' bg-[#2c4267b6] hover:cursor-pointer  hover:font-bold flex items-center justify-between  w-[100%] h-[5rem]'>
               <div className='flex items-center ml-[10%] w-[80%]'>
                 <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
-                <Link  className=' text-white text-[1.3rem] ml-[5%]'>ferando</Link>
+                <Link  className=' text-white text-[1.3rem] ml-[5%]'>{user}</Link>
               </div>
             </div>
             <div className=' hover:cursor-pointer  hover:font-bold flex items-center justify-between  w-[100%] h-[3rem]'>

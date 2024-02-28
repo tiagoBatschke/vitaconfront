@@ -8,12 +8,14 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { token, setToken } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/login', { 'email': email, 'password': password });
-      setToken(response.data.token)
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user.name));
       setEmail('');
       setPassword('');
       navigate('/Home');
