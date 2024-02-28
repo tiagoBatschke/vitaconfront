@@ -127,13 +127,13 @@ function createCliente() {
   }, [clientes]);
 
   const handleAtivoClick = () => {
-    setAtivo(true);
-    setInativo(false);
+    setAtivo(prevAtivo => true);
+    setInativo(prevInativo => false);
   };
   
   const handleInativoClick = () => {
-    setAtivo(false);
-    setInativo(true);
+    setAtivo(prevAtivo => false);
+    setInativo(prevInativo => true);
   };
   
  return (
@@ -197,11 +197,11 @@ function createCliente() {
                      <div className='w-[40%] flex justify-evenly  items-center'>
                         <div className='w-[30%] flex justify-evenly  items-center'>
                           <label className='text-[1rem]' htmlFor="">Ativo</label>
-                          <button className={`bg-[${ativo ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleAtivoClick}></button>
+                          <button className={`bg-[${ativo === true ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleAtivoClick}></button>
                         </div>
                         <div className='w-[30%] flex justify-evenly  items-center'>
                           <label className='text-[1rem]' htmlFor="">Inativo</label>
-                          <button className={`bg-[${inativo ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleInativoClick}></button>
+                          <button className={`bg-[${inativo  === true ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleInativoClick}></button>
                         </div>
                      </div>
                 </div>  
