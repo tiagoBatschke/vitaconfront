@@ -13,7 +13,7 @@ const RegisterScreen = () => {
   const handleRegister  = async(event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/register', {'name':name, 'email':email, 'password':password, 'password_confirmation':password_confirmation})
+      const response = await axios.post('/register', {'name':name, 'email':email, 'password':password, 'password_confirmation':password_confirmation})
       console.log(response.data);
       setEmail('')
       setName('')

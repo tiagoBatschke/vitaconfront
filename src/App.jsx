@@ -6,16 +6,19 @@ import { Route, Routes} from "react-router-dom"
 import LoginScreen from './screens/LoginScreen.jsx'
 import HomeScreen from './screens/HomeScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
+import { AuthContextProvedor } from './context/context.jsx'
 
 function App() {
 
   return (
     <>
-    <Routes>
-      <Route path ='/' element={<LoginScreen/>}/>
-      <Route path ='/Home' element={<HomeScreen/>}/>
-      <Route path ='/Register' element={<RegisterScreen/>}/>
-    </Routes>
+    <AuthContextProvedor>
+      <Routes>
+        <Route path ='/' element={<LoginScreen/>}/>
+        <Route path ='/Home' element={<HomeScreen/>}/>
+        <Route path ='/Register' element={<RegisterScreen/>}/>
+      </Routes>
+    </AuthContextProvedor>
      </>
   )
 }
