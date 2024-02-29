@@ -2,34 +2,44 @@ import React, { useEffect, useState, useContext  } from 'react'
 import { Link, Route, Routes, useNavigate} from "react-router-dom"
 import axios from '../api/axios'
 import { AuthContext } from '../context/context'
+import LateralBar from '../components/lateralBar'
 
 
-const HomeScreen = () => {
-  const [email, setEmail]= useState('')
-  const [nome, setNome]= useState('')
-  const [cnpj, setCnpj]= useState('')
-  const [contato, setContato]= useState('')
-  const [telefone, setTelefone]= useState('')
+const ProjetosScreen = () => {
+
+
+ 
   const [ativo, setAtivo]= useState(true)
   const [inativo, setInativo]= useState(false)
-  const [logo, setLogo]= useState('')
-  const [clientesStyled, setClientesStyled]= useState(null)
+  const [projetosStyled, setprojetosStyled]= useState(null)
   const [screen, setScreen] =useState()
   const [clientes, setClientes] =useState(null)
-  const [clienteId, setClienteId] =useState('')
-  const [password, setPassword]= useState('')
-  const [password_confirmation, setPassword_confirmation]= useState('')
-  const navigate = useNavigate()
-
+  const [nome, setNome] =useState(null)
+  const [cliente, setCliente] =useState(null)
+  const [tipo, setTipo] =useState(null)
+  const [projetos, setProjetos] =useState(null)
+  const [projetoId, setProjetoId] =useState('')
   const [func, setFunc] =useState('create')
-
-
-
-
   const  token = localStorage.getItem('token')
   const  user = localStorage.getItem('user')
 
 
+  function fetchProjetos() {
+
+    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
+      withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        setProjetos(response.data)
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    }); 
+ 
+}
   function fetchClientes() {
 
     axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
@@ -47,7 +57,7 @@ const HomeScreen = () => {
  
 }
 
-  function deleteClientes(id) {
+  function deleteProjeto(id) {
 
     axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${id}`,  {
       withCredentials: true,
@@ -92,7 +102,7 @@ function registerUser() {
 
 
 
-function createCliente() {
+function createProjetos() {
 
   registerUser();
   axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
@@ -119,9 +129,8 @@ function createCliente() {
 }
 
 
-
-function updateCliente() {
-  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${clienteId}`, {
+function updateProjetos() {
+  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${projetoId}`, {
       nome: nome,
       cnpj: cnpj,
       contato: contato,
@@ -149,14 +158,15 @@ function updateCliente() {
 }
 
   useEffect(() => {
+    fetchProjetos()
     fetchClientes()
   }, [screen])
 
 
   useEffect(() => {
 
-    if (clientes != null && clientes.clientes) {
-      setClientesStyled(clientes.clientes.map((item) => {
+    if (projetos != null && projetos.projetos) {
+      setprojetosStyled(projetos.projetos.map((item) => {
         // Função para formatar a data
         const formatDate = (dateString) => {
           const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
@@ -176,8 +186,8 @@ function updateCliente() {
             <div>{formatDate(item.created_at)}</div>
             <div>{formatDate(item.status)}</div>
             <div className='w-[15%] flex justify-evenly'>
-              <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form'), setFunc('update'), setClienteId(item.id), setNome(item.nome), setCnpj(item.cnpj), setContato(item.contato), setEmail(item.email), setTelefone(item.telefone)}}>Editar</button>
-              <button className='w-[10%] text-red-500 font-bold mr-[2%] ' onClick={()=>{deleteClientes(item.id)}}>X</button>
+              <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form'), setFunc('update'), setProjetoId(item.id)}}>Editar</button>
+              <button className='w-[10%] text-red-500 font-bold mr-[2%] ' onClick={()=>{deleteProjeto(item.id)}}>X</button>
             </div>
           </div>
         );
@@ -195,6 +205,15 @@ function updateCliente() {
     setAtivo(prevAtivo => false);
     setInativo(prevInativo => true);
   };
+
+
+    const [isOpen, setIsOpen] = useState(false);
+  
+    // Função para alternar o estado do dropdown entre aberto e fechado
+    const toggleDropdown = () => {
+      setIsOpen(!isOpen);
+    };
+   
   
  return (
       <div className='w-[100%]'>
@@ -208,53 +227,34 @@ function updateCliente() {
           </div>
         </div>
         <div className='flex h-[90vh] w-[100%]'>      
-          <div className='flex flex-col  h-[90vh] w-[17%] bg-[#283138]'>
-            <div className=' bg-[#2c4267b6] hover:cursor-pointer  hover:font-bold flex items-center justify-between  w-[100%] h-[5rem]'>
-              <div className='flex items-center ml-[10%] w-[80%]'>
-                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
-                <Link  className=' text-white text-[1.3rem] ml-[5%]'>{user}</Link>
-              </div>
-            </div>
-            <div className=' hover:cursor-pointer  hover:font-bold flex items-center justify-between  w-[100%] h-[3rem]'>
-              <div className='flex items-center ml-[10%] w-[80%]'>
-                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/ship_icon.png?raw=true" className='w-[2rem] h-[2rem] ml-[0.5rem]' alt="" />
-                <Link  className=' text-[#ffffff93] ml-[10%]'>Dashboard</Link>
-              </div>
-            </div>
-            <div className='flex flex-col bg-[#ffffff1e]  w-[100%]  h-[80%]   items-center'>
-              <div className='flex flex-col  h-[60%]  w-[90%]  justify-evenly '>
-                <Link  className=' hover:cursor-pointer hover:font-bold text-white'>Institucional</Link>
-                <div className='flex flex-col'>
-                  <Link  className=' hover:cursor-pointer hover:font-bold text-white'>Cidades / Bairros</Link>
-                  <Link  className=' hover:cursor-pointer hover:font-bold text-white'>POI(localizações)</Link>
-                  <Link  className=' hover:cursor-pointer hover:font-bold text-white'>Diferenciais</Link>
-                  <Link  className=' hover:cursor-pointer hover:font-bold text-white'>Tipos de uso</Link>
-                </div>
-                <Link  className=' hover:cursor-pointer hover:font-bold text-white'>Empreendimentos</Link>
-                <div className='flex flex-col'>
-                  <Link  className=' hover:cursor-pointer hover:text-[1.4rem]  text-white text-[1.3rem] font-bold'>CLIENTES *</Link>
-                  <Link  className=' hover:cursor-pointer hover:font-bold text-white text-[1.3rem] font-semibold'>PROJETOS</Link>
-                </div>
-              </div>
-            </div>
-          </div>
+         <LateralBar user={user} screen={'Projetos'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[10%] ml-[2%]'>Clientes</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form')}}>Novo Cliente</button>
+              <h2 className='w-[10%] ml-[2%]'>Projetos</h2>
+              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form')}}>Novo Projeto</button>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
             {screen === "form" ? (
                 <div className='w-[100%] h-[10vh]  flex '>
                       <div className='w-[50%] h-[60vh] flex flex-col justify-evenly items-center '>
                         <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Cnpj' type="text" value={cnpj} onChange={(e) => setCnpj(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Contato' type="text" value={contato} onChange={(e) => setContato(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='telefone celular' type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)}></input>
-                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
-                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="text" value={password_confirmation} onChange={(e)=>{setPassword_confirmation(e.target.value)}}></input>
-                        <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={func === 'create' ? createCliente : updateCliente}>Salvar</button>
+                        <div className="dropdown">
+                              {/* Botão para abrir/fechar o dropdown */}
+                              <button className="dropdown-toggle" onClick={toggleDropdown}>
+                                {isOpen ? 'Fechar Dropdown' : 'Abrir Dropdown'}
+                              </button>
+
+                              {/* Conteúdo do dropdown */}
+                              {isOpen && (
+                                <div className="dropdown-content">
+                                  <p>Item 1</p>
+                                  <p>Item 2</p>
+                                  <p>Item 3</p>
+                                  {/* Adicione mais itens conforme necessário */}
+                                </div>
+                              )}
+                            </div>
+                          <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={func === 'create' ? createProjetos : updateProjetos}>Salvar</button>
                       </div>
                      <div className='w-[40%] flex justify-evenly  items-center'>
                         <div className='w-[30%] flex justify-evenly  items-center'>
@@ -269,8 +269,8 @@ function updateCliente() {
                 </div>  
                 ) : (
                   <div className='flex flex-col items-center justify-evenly w-[100%] h-[50vh]'>
-                    {/* Caso contrário, renderize o conteúdo de clientesStyled */}
-                    {clientesStyled}
+                    {/* Caso contrário, renderize o conteúdo de projetosStyled */}
+                    {projetosStyled}
                   </div>
                 )}
             </div>
@@ -282,4 +282,4 @@ function updateCliente() {
   )
 }
 
-export default HomeScreen
+export default ProjetosScreen
