@@ -15,7 +15,9 @@ const ProjetosScreen = () => {
   const [screen, setScreen] =useState()
   const [clientes, setClientes] =useState(null)
   const [nome, setNome] =useState(null)
-  const [cliente, setCliente] =useState(null)
+  const [cliente, setCliente] =useState('Cliente')
+  const [clientesStyled, setClientesStyled]= useState(null)
+  const [clienteId, setClienteId] =useState(null)
   const [tipo, setTipo] =useState(null)
   const [projetos, setProjetos] =useState(null)
   const [projetoId, setProjetoId] =useState('')
@@ -26,7 +28,7 @@ const ProjetosScreen = () => {
 
   function fetchProjetos() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
+    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -34,6 +36,7 @@ const ProjetosScreen = () => {
     })
     .then(response => {
         setProjetos(response.data)
+       
     })
     .catch(error => {
         console.error('Erro:', error);
@@ -59,7 +62,7 @@ const ProjetosScreen = () => {
 
   function deleteProjeto(id) {
 
-    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${id}`,  {
+    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -73,71 +76,12 @@ const ProjetosScreen = () => {
     }); 
  
 }
-  
-
-function registerUser() {
-  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/register', {
-      name: nome,
-      email: email,
-      password: password,
-      password_confirmation: password_confirmation ,
-      status:  ativo === true ? 'ativo' : 'inativo',
-      role: 'cliente',
-      telefone: telefone,
-      cnpj: cnpj,
-      contato: contato
-  })
-  .then(response => {
-      // Registro bem-sucedido, você pode tratar a resposta conforme necessário
-      console.log(response.data);
-      // Redirecionar para outra página, exibir uma mensagem de sucesso, etc.
-  })
-  .catch(error => {
-      // Ocorreu um erro ao tentar registrar o usuário
-      console.error('Erro:', error.response.data.message);
-      // Exibir uma mensagem de erro para o usuário, redirecionar para outra página, etc.
-  });
-}
-
-
-
 
 function createProjetos() {
-
-  registerUser();
-  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
+  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos', {
       nome: nome,
-      cnpj: cnpj,
-      contato: contato,
-      email: email,
-      telefone: telefone,
-      celular: '11111',
-      status: ativo === true ? 'ativo' : 'inativo',
-  }, {
-      withCredentials: true,
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
-  })
-  .then(response => {
-      setScreen('')
-   
-  })
-  .catch(error => {
-      console.error('Erro:', error);
-  });
-}
-
-
-function updateProjetos() {
-  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${projetoId}`, {
-      nome: nome,
-      cnpj: cnpj,
-      contato: contato,
-      email: email,
-      telefone: telefone,
-      celular: '11111',
-      status: ativo === true ? 'ativo' : 'inativo',
+      cliente_id: clienteId, 
+      tipos: tipo,
   }, {
       withCredentials: true,
       headers: {
@@ -147,10 +91,34 @@ function updateProjetos() {
   .then(response => {
       setScreen('')
       setNome('')
-      setCnpj('')
-      setContato('')
-      setEmail('')
-      setTelefone('')
+      setClienteId(null)
+      setCliente('Cliente')
+      setTipo('')
+
+  })
+  .catch(error => {
+      console.error('Erro:', error);
+  });
+}
+
+
+function updateProjetos() {
+  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos/${projetoId}`, {
+    nome: nome,
+    cliente_id: clienteId, 
+    tipos: tipo,
+  }, {
+      withCredentials: true,
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
+  .then(response => {
+    setScreen('')
+    setNome('')
+    setClienteId(null)
+    setCliente('Cliente')
+    setTipo('')
   })
   .catch(error => {
       console.error('Erro:', error);
@@ -194,6 +162,36 @@ function updateProjetos() {
       }));
     }
     
+  }, [projetos]);
+
+
+  useEffect(() => {
+
+    if (clientes != null && clientes.clientes) {
+      setClientesStyled(clientes.clientes.map((item) => {
+        // Função para formatar a data
+        const formatDate = (dateString) => {
+          const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
+          const match = regex.exec(dateString);
+          if (match) {
+            const year = match[1];
+            const month = match[2];
+            const day = match[3];
+            return `${day}/${month}/${year}`;
+          }
+          return dateString; // Retorna a string original se não houver correspondência
+        };
+  
+        return (
+          <div className='flex w-[100%] h-[5vh] justify-evenly items-center mt-2' key={item.id} onClick={()=>{setCliente(item.nome.toUpperCase()), setClienteId(item.id), toggleDropdown()}}>
+            <div className='w-[20%]'>{item.nome.toUpperCase()}</div>
+            <div>{formatDate(item.created_at)}</div>
+            <div>{formatDate(item.status)}</div>
+          </div>
+        );
+      }));
+    }
+    
   }, [clientes]);
 
   const handleAtivoClick = () => {
@@ -230,7 +228,7 @@ function updateProjetos() {
          <LateralBar user={user} screen={'Projetos'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[10%] ml-[2%]'>Projetos</h2>
+              <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>Projetos</h2>
               <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form')}}>Novo Projeto</button>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
@@ -238,22 +236,18 @@ function updateProjetos() {
                 <div className='w-[100%] h-[10vh]  flex '>
                       <div className='w-[50%] h-[60vh] flex flex-col justify-evenly items-center '>
                         <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                        <div className="dropdown">
+                        <div className="w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white">
                               {/* Botão para abrir/fechar o dropdown */}
-                              <button className="dropdown-toggle" onClick={toggleDropdown}>
-                                {isOpen ? 'Fechar Dropdown' : 'Abrir Dropdown'}
-                              </button>
+                              <button className="w-[100%] h-[100%] flex text-slate-400" onClick={toggleDropdown}>{cliente}</button>
 
                               {/* Conteúdo do dropdown */}
                               {isOpen && (
-                                <div className="dropdown-content">
-                                  <p>Item 1</p>
-                                  <p>Item 2</p>
-                                  <p>Item 3</p>
-                                  {/* Adicione mais itens conforme necessário */}
+                                <div className="bg-[#93919133] w-[103%] -ml-[1.5%]">
+                                 {clientesStyled}
                                 </div>
                               )}
                             </div>
+                            <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Tipo' type="text" value={tipo} onChange={(e) =>setTipo(e.target.value)}></input>
                           <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={func === 'create' ? createProjetos : updateProjetos}>Salvar</button>
                       </div>
                      <div className='w-[40%] flex justify-evenly  items-center'>

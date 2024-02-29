@@ -212,7 +212,7 @@ function updateCliente() {
          <LateralBar user={user} screen={'Clientes'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[10%] ml-[2%]'>Clientes</h2>
+              <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>Clientes</h2>
               <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form')}}>Novo Cliente</button>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
