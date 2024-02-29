@@ -16,7 +16,13 @@ const HomeScreen = () => {
   const [clientesStyled, setClientesStyled]= useState(null)
   const [screen, setScreen] =useState()
   const [clientes, setClientes] =useState(null)
+  const [clienteId, setClienteId] =useState('')
+  const [password, setPassword]= useState('')
+  const [password_confirmation, setPassword_confirmation]= useState('')
   const navigate = useNavigate()
+
+  const [func, setFunc] =useState('create')
+
 
 
 
@@ -40,53 +46,106 @@ const HomeScreen = () => {
     }); 
  
 }
+
+  function deleteClientes(id) {
+
+    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${id}`,  {
+      withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        setScreen('a')
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    }); 
+ 
+}
   
 
-
-function createCliente() {
-    axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
-        nome: nome,
-        cnpj: cnpj,
-        contato: contato,
-        email: email,
-        telefone: telefone,
-        celular: '11111',
-        status: ativo === true ? 'ativo' : 'inativo',
-    }, {
-        withCredentials: true,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(response => {
-       setScreen('')
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    });
+function registerUser() {
+  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/register', {
+      name: nome,
+      email: email,
+      password: password,
+      password_confirmation: password_confirmation ,
+      status:  ativo === true ? 'ativo' : 'inativo',
+      role: 'cliente',
+      telefone: telefone,
+      cnpj: cnpj,
+      contato: contato
+  })
+  .then(response => {
+      // Registro bem-sucedido, você pode tratar a resposta conforme necessário
+      console.log(response.data);
+      // Redirecionar para outra página, exibir uma mensagem de sucesso, etc.
+  })
+  .catch(error => {
+      // Ocorreu um erro ao tentar registrar o usuário
+      console.error('Erro:', error.response.data.message);
+      // Exibir uma mensagem de erro para o usuário, redirecionar para outra página, etc.
+  });
 }
 
+
+
+
 function createCliente() {
-    axios.put('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
-        nome: nome,
-        cnpj: cnpj,
-        contato: contato,
-        email: email,
-        telefone: telefone,
-        celular: '11111',
-        status: ativo === true ? 'ativo' : 'inativo',
-    }, {
-        withCredentials: true,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(response => {
-       setScreen('')
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    });
+
+  registerUser();
+  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
+      nome: nome,
+      cnpj: cnpj,
+      contato: contato,
+      email: email,
+      telefone: telefone,
+      celular: '11111',
+      status: ativo === true ? 'ativo' : 'inativo',
+  }, {
+      withCredentials: true,
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
+  .then(response => {
+      setScreen('')
+   
+  })
+  .catch(error => {
+      console.error('Erro:', error);
+  });
+}
+
+
+
+function updateCliente() {
+  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${clienteId}`, {
+      nome: nome,
+      cnpj: cnpj,
+      contato: contato,
+      email: email,
+      telefone: telefone,
+      celular: '11111',
+      status: ativo === true ? 'ativo' : 'inativo',
+  }, {
+      withCredentials: true,
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
+  .then(response => {
+      setScreen('')
+      setNome('')
+      setCnpj('')
+      setContato('')
+      setEmail('')
+      setTelefone('')
+  })
+  .catch(error => {
+      console.error('Erro:', error);
+  });
 }
 
   useEffect(() => {
@@ -96,7 +155,7 @@ function createCliente() {
 
   useEffect(() => {
 
-    if (clientes != null) {
+    if (clientes != null && clientes.clientes) {
       setClientesStyled(clientes.clientes.map((item) => {
         // Função para formatar a data
         const formatDate = (dateString) => {
@@ -114,10 +173,11 @@ function createCliente() {
         return (
           <div className='flex w-[100%] justify-evenly items-center' key={item.id}>
             <div className='w-[20%]'>{item.nome.toUpperCase()}</div>
-            <div>{formatDate(item.created_at)}</div> {/* Chama a função formatDate para formatar a data */}
+            <div>{formatDate(item.created_at)}</div>
+            <div>{formatDate(item.status)}</div>
             <div className='w-[15%] flex justify-evenly'>
-              <button className='w-[60%] mr-[2%] border border-[#70AD47]'>Editar</button>
-              <button className='w-[10%] text-red-500 font-bold mr-[2%] '>X</button>
+              <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form'), setFunc('update'), setClienteId(item.id), setNome(item.nome), setCnpj(item.cnpj), setContato(item.contato), setEmail(item.email), setTelefone(item.telefone)}}>Editar</button>
+              <button className='w-[10%] text-red-500 font-bold mr-[2%] ' onClick={()=>{deleteClientes(item.id)}}>X</button>
             </div>
           </div>
         );
@@ -192,7 +252,9 @@ function createCliente() {
                         <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Contato' type="text" value={contato} onChange={(e) => setContato(e.target.value)}></input>
                         <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
                         <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='telefone celular' type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)}></input>
-                        <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={createCliente}>Salvar</button>
+                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="text" value={password_confirmation} onChange={(e)=>{setPassword_confirmation(e.target.value)}}></input>
+                        <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={func === 'create' ? createCliente : updateCliente}>Salvar</button>
                       </div>
                      <div className='w-[40%] flex justify-evenly  items-center'>
                         <div className='w-[30%] flex justify-evenly  items-center'>
