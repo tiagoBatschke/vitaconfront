@@ -3,6 +3,7 @@ import { Link, Route, Routes, useNavigate} from "react-router-dom"
 import axios from '../api/axios'
 import { AuthContext } from '../context/context'
 import LateralBar from '../components/lateralBar'
+import UploadImagem from '../components/uploadImagem'
 
 
 const ClienteScreen = () => {
@@ -172,15 +173,17 @@ function updateCliente() {
         };
   
         return (
-          <div className='flex w-[100%] justify-evenly items-center' key={item.id}>
-            <div className='w-[20%]'>{item.nome.toUpperCase()}</div>
-            <div>{formatDate(item.created_at)}</div>
-            <div>{formatDate(item.status)}</div>
-            <div className='w-[15%] flex justify-evenly'>
-              <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form'), setFunc('update'), setClienteId(item.id), setNome(item.nome), setCnpj(item.cnpj), setContato(item.contato), setEmail(item.email), setTelefone(item.telefone)}}>Editar</button>
-              <button className='w-[10%] text-red-500 font-bold mr-[2%] ' onClick={()=>{deleteClientes(item.id)}}>X</button>
-            </div>
-          </div>
+          <tr className=' w-[100%]' key={item.id}>
+            <td className=' w-[23%] text-center'>{item.nome.toUpperCase()}</td>
+            <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
+            <td className=' w-[23%] text-center'>{formatDate(item.status)}</td>
+            <td className='w-[31%]'>
+              <div className='w-[70%] ml-[30%]'>      
+                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form'), setFunc('update'), setClienteId(item.id), setNome(item.nome), setCnpj(item.cnpj), setContato(item.contato), setEmail(item.email), setTelefone(item.telefone)}}>Editar</button>
+                <button className='w-[10%] text-red-500 font-bold  ' onClick={()=>{deleteClientes(item.id)}}>X</button>
+              </div>
+            </td>
+          </tr>
         );
       }));
     }
@@ -213,38 +216,22 @@ function updateCliente() {
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
               <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>Clientes</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form')}}>Novo Cliente</button>
+              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/Clientes/newCliente');}}>Novo Cliente</button>
             </div>
-            <div className='flex flex-col items-center justify-evenly w-[100%]'>
-            {screen === "form" ? (
-                <div className='w-[100%] h-[10vh]  flex '>
-                      <div className='w-[50%] h-[60vh] flex flex-col justify-evenly items-center '>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Cnpj' type="text" value={cnpj} onChange={(e) => setCnpj(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Contato' type="text" value={contato} onChange={(e) => setContato(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='telefone celular' type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)}></input>
-                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
-                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="text" value={password_confirmation} onChange={(e)=>{setPassword_confirmation(e.target.value)}}></input>
-                        <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={func === 'create' ? createCliente : updateCliente}>Salvar</button>
-                      </div>
-                     <div className='w-[40%] flex justify-evenly  items-center'>
-                        <div className='w-[30%] flex justify-evenly  items-center'>
-                          <label className='text-[1rem]' htmlFor="">Ativo</label>
-                          <button className={`bg-[${ativo === true ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleAtivoClick}></button>
-                        </div>
-                        <div className='w-[30%] flex justify-evenly  items-center'>
-                          <label className='text-[1rem]' htmlFor="">Inativo</label>
-                          <button className={`bg-[${inativo  === true ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleInativoClick}></button>
-                        </div>
-                     </div>
-                </div>  
-                ) : (
-                  <div className='flex flex-col items-center justify-evenly w-[100%] h-[50vh]'>
-                    {/* Caso contrário, renderize o conteúdo de clientesStyled */}
-                    {clientesStyled}
-                  </div>
-                )}
+            <div className='flex flex-col items-center justify-evenly w-[100%]'>    
+                    <table className='w-[90%] max-h-[50vh] min-h-[15vh]'>
+                      <thead>
+                        <tr className=''>
+                          <th className='w-[23%]'>Nome</th>
+                          <th className='w-[23%]'>Data de inclusão</th>
+                          <th className='w-[23%]'>Status</th>
+                          <th className='w-[31%]'>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {clientesStyled}
+                      </tbody>
+                    </table>     
             </div>
           </div>
         </div>
