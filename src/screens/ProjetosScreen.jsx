@@ -26,6 +26,8 @@ const ProjetosScreen = () => {
   const  user = localStorage.getItem('user')
 
 
+  const navigate = useNavigate()
+
   function fetchProjetos() {
 
     axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos',  {
@@ -154,7 +156,7 @@ function updateProjetos() {
             <div>{formatDate(item.created_at)}</div>
             <div>{formatDate(item.status)}</div>
             <div className='w-[15%] flex justify-evenly'>
-              <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form'), setFunc('update'), setProjetoId(item.id)}}>Editar</button>
+              <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Projetos/editProjeto/${item.id}`)}}>Editar</button>
               <button className='w-[10%] text-red-500 font-bold mr-[2%] ' onClick={()=>{deleteProjeto(item.id)}}>X</button>
             </div>
           </div>

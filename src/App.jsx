@@ -10,6 +10,7 @@ import { AuthContextProvedor } from './context/context.jsx'
 import ProjetosScreen from './screens/ProjetosScreen.jsx'
 import AddClienteScreen from './screens/addClienteScreen.jsx'
 import EditeClienteScreen from './screens/editeClient.jsx'
+import EditProjetoscreen from './screens/editProjetos.jsx'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path ='/Clientes' element={<ClienteScreen/>}/>
         <Route path ='/Clientes/newCliente' element={<AddClienteScreen/>}/>
         <Route path="/Clientes/editCliente/:id" element={<EditeClienteScreen/>} />
+        <Route path="/Projetos/editProjeto/:id" element={<EditProjetoscreen/>} />
         <Route path ='/Projetos' element={<ProjetosScreen/>}/>
         <Route path ='/Register' element={<RegisterScreen/>}/>
       </Routes>
