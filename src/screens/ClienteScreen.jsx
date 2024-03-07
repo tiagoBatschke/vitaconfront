@@ -16,7 +16,7 @@ const ClienteScreen = () => {
   const [inativo, setInativo]= useState(false)
   const [logo, setLogo]= useState('')
   const [clientesStyled, setClientesStyled]= useState(null)
-  const [screen, setScreen] =useState()
+  const [screen, setScreen] =useState('a')
   const [clientes, setClientes] =useState(null)
   const [clienteId, setClienteId] =useState('')
   const [password, setPassword]= useState('')
@@ -61,6 +61,7 @@ const ClienteScreen = () => {
         setScreen('a')
     })
     .catch(error => {
+      alert('cliente não pode ser apagado, pois está sendo utilizado em outra rota')
         console.error('Erro:', error);
     }); 
  
@@ -179,7 +180,7 @@ function updateCliente() {
             <td className=' w-[23%] text-center'>{formatDate(item.status)}</td>
             <td className='w-[31%]'>
               <div className='w-[70%] ml-[30%]'>      
-                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form'), setFunc('update'), setClienteId(item.id), setNome(item.nome), setCnpj(item.cnpj), setContato(item.contato), setEmail(item.email), setTelefone(item.telefone)}}>Editar</button>
+                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Clientes/editCliente/${item.id}`);}}>Editar</button>
                 <button className='w-[10%] text-red-500 font-bold  ' onClick={()=>{deleteClientes(item.id)}}>X</button>
               </div>
             </td>

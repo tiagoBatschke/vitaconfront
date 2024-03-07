@@ -14,6 +14,7 @@ const LoginScreen = () => {
     event.preventDefault();
     try {
       const response = await axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/login', { 'email': email, 'password': password });
+      localStorage.setItem('token', '');
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', response.data.user.name);
       localStorage.setItem('userRole', response.data.user.role);

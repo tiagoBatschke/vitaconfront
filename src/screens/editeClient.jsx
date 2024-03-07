@@ -37,6 +37,11 @@ const EditClienteScreen = () => {
     })
     .then(response => {
       console.log(response);
+      setNome(response.data.cliente.nome);
+      setCnpj(response.data.cliente.cnpj);
+      setContato(response.data.cliente.contato);
+      setEmail(response.data.cliente.email);
+      setTelefone(response.data.cliente.telefone);
       // Atualize os estados com os dados do cliente
     })
     .catch(error => {
@@ -44,7 +49,26 @@ const EditClienteScreen = () => {
     });
   };
 
+  const validateInputs = () => {
+    if (!email || !nome || !cnpj || !contato || !telefone) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return false;
+    }
+  
+    if (password !== password_confirmation) {
+      alert('As senhas não coincidem.');
+      return false;
+    }
+  
+    return true;
+  };
+
   const updateCliente = () => {
+
+    if (!validateInputs()) {
+      return;
+    }
+  
     axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${id}`, {
       nome: nome,
       cnpj: cnpj,
@@ -67,6 +91,7 @@ const EditClienteScreen = () => {
       setContato('');
       setEmail('');
       setTelefone('');
+      navigate('/Clientes');
     })
     .catch(error => {
       console.error('Erro:', error);
@@ -115,7 +140,7 @@ const EditClienteScreen = () => {
         <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
           <div className='flex items-center justify-between w-[90%] h-[10vh]'>
             <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={() => navigate('/Clientes')}>Clientes</h2>
-            <button className='w-[10%] mr-[2%] border border-[#70AD47]'>Novo Cliente</button>
+            {/* <button className='w-[10%] mr-[2%] border border-[#70AD47]'>Novo Cliente</button> */}
           </div>
           <div className='flex flex-col items-center justify-evenly w-[100%]'>
             <div className='w-[100%] h-[10vh]  flex'>
@@ -125,9 +150,9 @@ const EditClienteScreen = () => {
                 <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Contato' type="text" value={contato} onChange={(e) => setContato(e.target.value)} />
                 <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='telefone celular' type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)} />
-                <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="text" value={password} onChange={(e)=> setPassword(e.target.value)} />
-                <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="text" value={password_confirmation} onChange={(e)=> setPassword_confirmation(e.target.value)} />
-                <UploadImagem />
+                {/* <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="text" value={password} onChange={(e)=> setPassword(e.target.value)} />
+                <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="text" value={password_confirmation} onChange={(e)=> setPassword_confirmation(e.target.value)} /> */}
+                {/* <UploadImagem /> */}
                 <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={updateCliente}>Salvar</button>
               </div>
               <div className='w-[40%] flex justify-evenly items-center'>
