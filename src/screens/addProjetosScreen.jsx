@@ -6,7 +6,7 @@ import { AuthContext } from '../context/context';
 import LateralBar from '../components/lateralBar';
 import UploadImagem from '../components/uploadImagem';
 
-const EditProjetoscreen = () => {
+const AddProjetosScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -53,25 +53,6 @@ const EditProjetoscreen = () => {
 }
 
 
-  function fetchProjetos() {
-
-    axios.get(`https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos/${id}`,  {
-      withCredentials: true,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        console.log(response)
-        setNome(response.data.projeto.nome)
-        setClienteId(response.data.projeto.cliente_id)
-        setTipo(response.data.projeto.tipos)
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    }); 
- 
-}
 
 
 
@@ -89,17 +70,19 @@ const EditProjetoscreen = () => {
   };
 
 
-  function updateProjetos() {
+
+  function createProjetos() {
 
     if (!validateInputs()) {
-        return;
-      }
-    
-    axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos/${id}`, {
-      nome: nome,
-      cliente_id: clienteId, 
-      tipos: tipo,
-      status: status
+      return;
+    }
+
+
+    axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos', {
+        nome: nome,
+        cliente_id: clienteId, 
+        tipos: tipo,
+        status: status
     }, {
         withCredentials: true,
         headers: {
@@ -107,23 +90,22 @@ const EditProjetoscreen = () => {
         }
     })
     .then(response => {
-      setScreen('')
-      setNome('')
-      setClienteId(null)
-      setCliente('Cliente')
-      setTipo('')
+        setScreen('')
+        setNome('')
+        setClienteId(null)
+        setCliente('Cliente')
+        setTipo('')
+        navigate(`/Projetos`)
+  
     })
     .catch(error => {
         console.error('Erro:', error);
     });
   }
 
-  
-
 
   useEffect(() => {
     fetchClientes()
-    fetchProjetos()
   }, [screen]);
 
 
@@ -194,7 +176,7 @@ const EditProjetoscreen = () => {
          <LateralBar user={user} screen={'Projetos'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>Projetos</h2>
+              <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate(`/Projetos`)}}>Projetos</h2>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
                 <div className='w-[100%] h-[10vh]  flex '>
@@ -202,13 +184,13 @@ const EditProjetoscreen = () => {
                         <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
                         <div className="w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white">
                               {/* Botão para abrir/fechar o dropdown */}
-                              <select value={clienteId}  onChange={handleSelectChange} className="w-[100%] h-[100%] flex text-slate-400">
+                              <select onChange={handleSelectChange} className="w-[100%] h-[100%] flex text-slate-400">
                                 {clientesStyled}
                               </select>
 
                             </div>
                             <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Tipo' type="text" value={tipo} onChange={(e) =>setTipo(e.target.value)}></input>
-                          <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={updateProjetos}>Salvar</button>
+                          <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={createProjetos}>Salvar</button>
                       </div>
                       <div className='w-[40%] flex justify-evenly items-center'>
                     <div className='w-[30%] flex justify-evenly items-center' onClick={handleAtivoClick}>
@@ -230,4 +212,4 @@ const EditProjetoscreen = () => {
   );
 };
 
-export default EditProjetoscreen;
+export default AddProjetosScreen;

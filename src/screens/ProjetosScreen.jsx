@@ -151,15 +151,17 @@ function updateProjetos() {
         };
   
         return (
-          <div className='flex w-[100%] justify-evenly items-center' key={item.id}>
-            <div className='w-[20%]'>{item.nome.toUpperCase()}</div>
-            <div>{formatDate(item.created_at)}</div>
-            <div>{formatDate(item.status)}</div>
-            <div className='w-[15%] flex justify-evenly'>
-              <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Projetos/editProjeto/${item.id}`)}}>Editar</button>
-              <button className='w-[10%] text-red-500 font-bold mr-[2%] ' onClick={()=>{deleteProjeto(item.id)}}>X</button>
-            </div>
-          </div>
+          <tr className='h-[6vh] w-[100%]' key={item.id}>
+            <td className=' w-[23%] text-center'>{item.nome.toUpperCase()}</td>
+            <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
+            <td className=' w-[23%] text-center'>{formatDate(item.status)}</td>
+            <td className='w-[31%]'>
+              <div className='w-[70%] ml-[30%]'>      
+                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Projetos/editProjeto/${item.id}`)}}>Editar</button>
+                <button className='w-[10%] text-red-500 font-bold mr-[2%] ' onClick={()=>{deleteProjeto(item.id)}}>X</button>
+              </div>
+            </td>
+          </tr>
         );
       }));
     }
@@ -231,44 +233,22 @@ function updateProjetos() {
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
               <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>Projetos</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{setScreen('form')}}>Novo Projeto</button>
+              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Projetos/addProjeto`)}}>Novo Projeto</button>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
-            {screen === "form" ? (
-                <div className='w-[100%] h-[10vh]  flex '>
-                      <div className='w-[50%] h-[60vh] flex flex-col justify-evenly items-center '>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                        <div className="w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white">
-                              {/* Botão para abrir/fechar o dropdown */}
-                              <button className="w-[100%] h-[100%] flex text-slate-400" onClick={toggleDropdown}>{cliente}</button>
-
-                              {/* Conteúdo do dropdown */}
-                              {isOpen && (
-                                <div className="bg-[#93919133] w-[103%] -ml-[1.5%]">
-                                 {clientesStyled}
-                                </div>
-                              )}
-                            </div>
-                            <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Tipo' type="text" value={tipo} onChange={(e) =>setTipo(e.target.value)}></input>
-                          <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={func === 'create' ? createProjetos : updateProjetos}>Salvar</button>
-                      </div>
-                     <div className='w-[40%] flex justify-evenly  items-center'>
-                        <div className='w-[30%] flex justify-evenly  items-center'>
-                          <label className='text-[1rem]' htmlFor="">Ativo</label>
-                          <button className={`bg-[${ativo === true ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleAtivoClick}></button>
-                        </div>
-                        <div className='w-[30%] flex justify-evenly  items-center'>
-                          <label className='text-[1rem]' htmlFor="">Inativo</label>
-                          <button className={`bg-[${inativo  === true ? '#127ceee1' : '#fff'}] hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} onClick={handleInativoClick}></button>
-                        </div>
-                     </div>
-                </div>  
-                ) : (
-                  <div className='flex flex-col items-center justify-evenly w-[100%] h-[50vh]'>
-                    {/* Caso contrário, renderize o conteúdo de projetosStyled */}
-                    {projetosStyled}
-                  </div>
-                )}
+                  <table className='w-[90%] max-h-[50vh] min-h-[15vh]'>
+                      <thead>
+                        <tr className=''>
+                          <th className='w-[23%]'>Nome</th>
+                          <th className='w-[23%]'>Data de inclusão</th>
+                          <th className='w-[23%]'>Status</th>
+                          <th className='w-[31%]'>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          {projetosStyled}
+                      </tbody>
+                    </table>  
             </div>
           </div>
         </div>

@@ -66,92 +66,8 @@ const ClienteScreen = () => {
     }); 
  
 }
-  
 
-function registerUser() {
-  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/register', {
-      name: nome,
-      email: email,
-      password: password,
-      password_confirmation: password_confirmation ,
-      status:  ativo === true ? 'ativo' : 'inativo',
-      role: 'cliente',
-      telefone: telefone,
-      cnpj: cnpj,
-      contato: contato
-  })
-  .then(response => {
-      // Registro bem-sucedido, você pode tratar a resposta conforme necessário
-      console.log(response.data);
-      // Redirecionar para outra página, exibir uma mensagem de sucesso, etc.
-  })
-  .catch(error => {
-      // Ocorreu um erro ao tentar registrar o usuário
-      console.error('Erro:', error.response.data.message);
-      // Exibir uma mensagem de erro para o usuário, redirecionar para outra página, etc.
-  });
-}
-
-
-
-
-function createCliente() {
-
-  registerUser();
-  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes', {
-      nome: nome,
-      cnpj: cnpj,
-      contato: contato,
-      email: email,
-      telefone: telefone,
-      celular: '11111',
-      status: ativo === true ? 'ativo' : 'inativo',
-  }, {
-      withCredentials: true,
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
-  })
-  .then(response => {
-      setScreen('')
-   
-  })
-  .catch(error => {
-      console.error('Erro:', error);
-  });
-}
-
-
-
-function updateCliente() {
-  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${clienteId}`, {
-      nome: nome,
-      cnpj: cnpj,
-      contato: contato,
-      email: email,
-      telefone: telefone,
-      celular: '11111',
-      status: ativo === true ? 'ativo' : 'inativo',
-  }, {
-      withCredentials: true,
-      headers: {
-          'Authorization': `Bearer ${token}`
-      }
-  })
-  .then(response => {
-      setScreen('')
-      setNome('')
-      setCnpj('')
-      setContato('')
-      setEmail('')
-      setTelefone('')
-  })
-  .catch(error => {
-      console.error('Erro:', error);
-  });
-}
-
-  useEffect(() => {
+useEffect(() => {
     fetchClientes()
   }, [screen])
 
@@ -174,7 +90,7 @@ function updateCliente() {
         };
   
         return (
-          <tr className=' w-[100%]' key={item.id}>
+          <tr className='h-[5vh] w-[100%]' key={item.id}>
             <td className=' w-[23%] text-center'>{item.nome.toUpperCase()}</td>
             <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
             <td className=' w-[23%] text-center'>{formatDate(item.status)}</td>
