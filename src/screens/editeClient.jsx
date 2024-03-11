@@ -20,8 +20,35 @@ const EditClienteScreen = () => {
   const [password, setPassword] = useState('');
   const [password_confirmation, setPassword_confirmation] = useState('');
 
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [user, setUser] = useState(localStorage.getItem('user'));
+  const  token = localStorage.getItem('token')
+  const  user = localStorage.getItem('user')
+
+ useEffect(() => {
+   
+  function checkToken() {
+
+    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+      withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+       if (response.status !== 200) {
+        navigate('/')
+       }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        navigate('/')
+    }); 
+ 
+}
+
+
+    checkToken();
+  }, []);
+
   const [screen, setScreen] = useState('');
   const [status, setStatus] = useState('ativo');
 
@@ -39,7 +66,7 @@ const EditClienteScreen = () => {
       }
     })
     .then(response => {
-      console.log(response);
+  
       setNome(response.data.cliente.nome);
       setCnpj(response.data.cliente.cnpj);
       setContato(response.data.cliente.contato);

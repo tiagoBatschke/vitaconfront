@@ -1,4 +1,4 @@
-import React, { useState, useContext  } from 'react';
+import React, { useState, useContext, useEffect  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -6,6 +6,15 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  let contador = 0
+
+  
+  useEffect(() => {
+    if (contador === 0) {
+      localStorage.setItem('token', '');
+    }
+  }, [])
+  
 
 
   const handleLogin = async (event) => {
@@ -18,6 +27,7 @@ const LoginScreen = () => {
       localStorage.setItem('userRole', response.data.user.role);
       setEmail('');
       setPassword('');
+      contador++
       navigate('/CidadesBairros');
     } catch (error) {
       console.log(error);

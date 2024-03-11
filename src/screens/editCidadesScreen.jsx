@@ -26,6 +26,32 @@ const EditCidadesScreen = () => {
   const  token = localStorage.getItem('token')
   const  user = localStorage.getItem('user')
 
+ useEffect(() => {
+   
+  function checkToken() {
+
+    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+      withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+       if (response.status !== 200) {
+        navigate('/')
+       }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        navigate('/')
+    }); 
+ 
+}
+
+
+    checkToken();
+  }, []);
+
 
 
   const validateInputs = () => {
@@ -39,14 +65,14 @@ const EditCidadesScreen = () => {
 
   function fetchCidade() {
 
-    axios.get(`http://127.0.0.1:8000/api/cidades/${id}`,  {
+    axios.get(`https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
     .then(response => {
-      console.log(response)
+      
       setNome(response.data.cidade.nome)
       setSelectedUf(response.data.cidade.uf)
         
@@ -65,7 +91,7 @@ const EditCidadesScreen = () => {
     }
 
 
-    axios.put(`http://127.0.0.1:8000/api/cidades/${id}`, {
+    axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades/${id}`, {
         nome: nome,
         uf: selectedUf 
     }, {

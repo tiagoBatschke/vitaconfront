@@ -19,7 +19,7 @@ const UploadImagem = () => {
       }
     })
     .then(response => {
-      console.log('Upload bem-sucedido:', response.data);
+  
       // Aqui você pode lidar com a resposta do upload, como exibir a imagem enviada
     })
     .catch(error => {

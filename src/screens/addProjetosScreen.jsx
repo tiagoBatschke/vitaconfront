@@ -31,9 +31,34 @@ const AddProjetosScreen = () => {
   const [campoFaltante, setCampoFaltante]=  useState(false)
   const [styledInput, setStyledInput]=  useState('border-red-400 border-[2px]')
 
-
   const  token = localStorage.getItem('token')
   const  user = localStorage.getItem('user')
+
+ useEffect(() => {
+   
+  function checkToken() {
+
+    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+      withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+       if (response.status !== 200) {
+        navigate('/')
+       }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        navigate('/')
+    }); 
+ 
+}
+
+
+    checkToken();
+  }, []);
 
 
 
