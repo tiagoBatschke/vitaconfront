@@ -122,7 +122,7 @@ const AddCidadesScreen = () => {
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
               <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/CidadesBairros')}}>Cidades / Bairros</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/CidadesBairros/newCidades');}}>Nova Cidade</button>
+
             </div>
             <div className='flex items-center justify-evenly w-[90%] h-[5vh]  border-b mb-5'>
                <Link to={'/CidadesBairros/newCidades'}  className={`hover:cursor-pointer font-bold`}>Base</Link>
