@@ -1,14 +1,12 @@
 import React, { useState, useContext  } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/context.jsx'
 import axios from 'axios';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { token, setToken } = useContext(AuthContext);
-  const { user, setUser } = useContext(AuthContext);
+
 
   const handleLogin = async (event) => {
     event.preventDefault();

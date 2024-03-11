@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";
 import axios from '../api/axios';
-import { AuthContext } from '../context/context';
+  ;
 import LateralBar from '../components/lateralBar';
 import UploadImagem from '../components/uploadImagem';
 

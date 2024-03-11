@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext  } from 'react'
 import { Link, Route, Routes, useNavigate} from "react-router-dom"
 import axios from '../api/axios'
-import { AuthContext } from '../context/context'
+  
 import LateralBar from '../components/lateralBar'
 
 

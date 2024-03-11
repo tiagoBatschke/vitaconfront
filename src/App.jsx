@@ -6,7 +6,7 @@ import { Route, Routes} from "react-router-dom"
 import LoginScreen from './screens/LoginScreen.jsx'
 import ClienteScreen from './screens/ClienteScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
-import { AuthContextProvedor } from './context/context.jsx'
+
 import ProjetosScreen from './screens/ProjetosScreen.jsx'
 import AddClienteScreen from './screens/addClienteScreen.jsx'
 import EditeClienteScreen from './screens/editeClient.jsx'
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-    <AuthContextProvedor>
+  
       <Routes>
         <Route path ='/' element={<LoginScreen/>}/>
         <Route path ='/Register' element={<RegisterScreen/>}/>
@@ -42,7 +42,7 @@ function App() {
         <Route path ='/CidadesBairros/editCidades/:id' element={<EditCidadesScreen/>}/>
         <Route path ='/CidadesBairros/Bairros/editBairros/:id' element={<EditBairroscreen/>}/>
       </Routes>
-    </AuthContextProvedor>
+    
      </>
   )
 }
