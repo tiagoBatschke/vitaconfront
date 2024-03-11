@@ -67,7 +67,7 @@ const AddCidadesScreen = () => {
     }
 
 
-    axios.post('`https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades', {
+    axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades', {
         nome: nome,
         uf: selectedUf 
     }, {
