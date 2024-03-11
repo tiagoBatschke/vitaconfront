@@ -24,6 +24,11 @@ const AddClienteScreen = () => {
   const [clienteId, setClienteId] =useState('')
   const [password, setPassword]= useState('')
   const [password_confirmation, setPassword_confirmation]= useState('')
+  const [campoFaltante, setCampoFaltante]=  useState(false)
+  const [styledInput, setStyledInput]=  useState('border-red-600 border-[2px]')
+
+
+
   const navigate = useNavigate()
 
 
@@ -45,7 +50,7 @@ useEffect(() => {
   }
 
 
-}, [ativo, inativo])
+}, [ativo, inativo, campoFaltante])
 
   
 
@@ -75,7 +80,7 @@ function registerUser() {
 
 const validateInputs = () => {
   if (!email || !nome || !cnpj || !contato || !telefone) {
-    alert('Por favor, preencha todos os campos obrigatórios.');
+    setCampoFaltante(true)
     return false;
   }
 
@@ -116,6 +121,7 @@ function createCliente() {
       setEmail('');
       setTelefone('');
     navigate('/Clientes');
+    setCampoFaltante(false)
    
   })
   .catch(error => {
@@ -131,6 +137,8 @@ function createCliente() {
   const handleInativoClick = () => {
     setAtivo(false);
     setInativo(true);
+
+    
   };
   
  return (
@@ -154,11 +162,16 @@ function createCliente() {
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
                 <div className='w-[100%] h-[10vh]  flex '>
                       <div className='w-[50%] h-[60vh] flex flex-col justify-evenly items-center '>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Cnpj' type="text" value={cnpj} onChange={(e) => setCnpj(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Contato' type="text" value={contato} onChange={(e) => setContato(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='telefone celular' type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)}></input>
+                        <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !nome  ? styledInput : 'border-black'}`} placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
+                        <p className={ campoFaltante === true && !nome  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
+                        <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !cnpj ? styledInput : 'border-black'}`} placeholder='Cnpj' type="text" value={cnpj} onChange={(e) => setCnpj(e.target.value)}></input>
+                        <p className={ campoFaltante === true && !cnpj  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
+                        <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !contato  ? styledInput : 'border-black'}`} placeholder='Contato' type="text" value={contato} onChange={(e) => setContato(e.target.value)}></input>
+                        <p className={ campoFaltante === true && !contato  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
+                        <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !email ? styledInput : 'border-black'}`} placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
+                        <p className={ campoFaltante === true && !email  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
+                        <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !telefone ? styledInput : 'border-black'}`} placeholder='telefone celular' type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)}></input>
+                        <p className={ campoFaltante === true && !telefone  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
                         {/* <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
                         <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="text" value={password_confirmation} onChange={(e)=>{setPassword_confirmation(e.target.value)}}></input> */}
                         {/* <UploadImagem/> */}

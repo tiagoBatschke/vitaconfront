@@ -20,7 +20,7 @@ const LoginScreen = () => {
       localStorage.setItem('userRole', response.data.user.role);
       setEmail('');
       setPassword('');
-      navigate('/Clientes');
+      navigate('/CidadesBairros');
     } catch (error) {
       console.log(error);
     }

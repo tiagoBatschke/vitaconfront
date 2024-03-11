@@ -28,6 +28,8 @@ const EditProjetoscreen = () => {
   const [ativoStyle, setAtivoStyle] = useState('bg-[#127ceee1]');
   const [inativoStyle, setInativoStyle] = useState('bg-[#127ceee1]');
 
+  const [campoFaltante, setCampoFaltante]=  useState(false)
+  const [styledInput, setStyledInput]=  useState('border-red-400 border-[2px]')
 
 
   const  token = localStorage.getItem('token')
@@ -62,7 +64,7 @@ const EditProjetoscreen = () => {
         }
     })
     .then(response => {
-        console.log(response)
+      
         setNome(response.data.projeto.nome)
         setClienteId(response.data.projeto.cliente_id)
         setTipo(response.data.projeto.tipos)
@@ -78,15 +80,15 @@ const EditProjetoscreen = () => {
 
 
 
-  const validateInputs = () => {
-    if ( !nome || !clienteId || !tipo) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-      return false;
-    }
-  
-  
-    return true;
-  };
+const validateInputs = () => {
+  if ( !nome || !clienteId || !tipo) {
+    setCampoFaltante(true)
+    return false;
+  }
+
+  return true;
+};
+
 
 
   function updateProjetos() {
@@ -112,6 +114,8 @@ const EditProjetoscreen = () => {
       setClienteId(null)
       setCliente('Cliente')
       setTipo('')
+      setCampoFaltante(false)
+      navigate(`/Projetos`)
     })
     .catch(error => {
         console.error('Erro:', error);
@@ -160,7 +164,7 @@ const EditProjetoscreen = () => {
       setAtivoStyle('bg-[#fff]');
       setInativoStyle('bg-[#127ceee1]');
     }
-  }, [ativo]);
+  }, [ativo, campoFaltante]);
   
 
   const handleAtivoClick = () => {
@@ -199,15 +203,19 @@ const EditProjetoscreen = () => {
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
                 <div className='w-[100%] h-[10vh]  flex '>
                       <div className='w-[50%] h-[60vh] flex flex-col justify-evenly items-center '>
-                        <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                        <div className="w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white">
+                        <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !nome  ? styledInput : 'border-black'}`} placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
+                        <p className={ campoFaltante === true && !nome  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
+                        <div className={`w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !clienteId  ? styledInput : 'border-black'}`}>
                               {/* Botão para abrir/fechar o dropdown */}
                               <select value={clienteId}  onChange={handleSelectChange} className="w-[100%] h-[100%] flex text-slate-400">
+                              <option value="">Selecione um cliente</option>
                                 {clientesStyled}
                               </select>
 
                             </div>
-                            <input className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Tipo' type="text" value={tipo} onChange={(e) =>setTipo(e.target.value)}></input>
+                            <p className={ campoFaltante === true && !clienteId  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
+                            <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !tipo  ? styledInput : 'border-black'}`}  placeholder='Tipo' type="text" value={tipo} onChange={(e) =>setTipo(e.target.value)}></input>
+                            <p className={ campoFaltante === true && !tipo  ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >Campo Obrigatorio!</p>
                           <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={updateProjetos}>Salvar</button>
                       </div>
                       <div className='w-[40%] flex justify-evenly items-center'>
