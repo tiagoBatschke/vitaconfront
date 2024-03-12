@@ -48,7 +48,7 @@ const LoginScreen = () => {
       </div>
           <div className='flex flex-col w-[80%]  p-1 items-start  border-[1px] border-[#C4C4C4]'>
             <label className='text-[0.7rem]' htmlFor="">Password</label>
-            <input className='w-[80%] ml-[0%] h-[3vh]   outline-none' placeholder='Password' type="text" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+            <input className='w-[80%] ml-[0%] h-[3vh]   outline-none' placeholder='Password' type="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
           </div>
           <div className=' w-[25%] flex justify-evenly'>
             <input type="checkbox" />

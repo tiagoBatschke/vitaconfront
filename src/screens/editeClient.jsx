@@ -9,7 +9,7 @@ import UploadImagem from '../components/uploadImagem';
 const EditClienteScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+const [screen, setScreen] =useState('a')
   const [email, setEmail] = useState('');
   const [nome, setNome] = useState('');
   const [cnpj, setCnpj] = useState('');
@@ -19,6 +19,9 @@ const EditClienteScreen = () => {
   const [inativo, setInativo] = useState(false);
   const [password, setPassword] = useState('');
   const [password_confirmation, setPassword_confirmation] = useState('');
+
+  const [toggleLogOut, setToggleLogOut] = useState(false)
+  const [userOptions, setUserOptions] =useState(<div className='text-center text-white -mb-8 mt-2 w-[90%] -ml-[10%] bg-slate-500 z-10' onClick={()=>{localStorage.setItem('token', ''), setScreen('gg')}}>Log Out</div>)
 
   const  token = localStorage.getItem('token')
   const  user = localStorage.getItem('user')
@@ -47,9 +50,8 @@ const EditClienteScreen = () => {
 
 
     checkToken();
-  }, []);
+  }, [screen]);
 
-  const [screen, setScreen] = useState('');
   const [status, setStatus] = useState('ativo');
 
   const [ativoStyle, setAtivoStyle] = useState('bg-[#127ceee1]');
@@ -157,12 +159,15 @@ const EditClienteScreen = () => {
 
   return (
     <div className='w-[100%]'>
-        <div className='w-[100%] h-[10vh] bg-[#F9F9F9] border-b flex '>
+         <div className='w-[100%] h-[10vh] bg-[#F9F9F9] border-b flex '>
           <div className='w-[95%] flex items-center justify-between'>
             <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/votacon_logo.jpg?raw=true" className='w-[15%] h-[8vh] ' alt="" />
-            <div className='flex items-center justify-between w-[4%] hover:cursor-pointer'>
-              <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
-              <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/down.png?raw=true" className='w-[0.8rem] h-[0.8rem]' alt="" />
+            <div className='flex flex-col items-center justify-between w-[5%] hover:cursor-pointer'>
+              <div className='flex items-center justify-between w-[100%] hover:cursor-pointer' onClick={()=>{setToggleLogOut(!toggleLogOut)}}>
+                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
+                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/down.png?raw=true" className='w-[0.8rem] h-[0.8rem]' alt="" />
+              </div>
+              {toggleLogOut === true ? userOptions : null}
             </div>
           </div>
         </div>

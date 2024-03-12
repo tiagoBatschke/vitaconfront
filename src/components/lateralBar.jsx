@@ -24,7 +24,7 @@ function LateralBar({user, screen }) {
           <Link to={'/CidadesBairros'}  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Cidades' ? 'font-bold ': 'font-normal'}`}>Cidades / Bairros</Link>
           <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'POI' ? 'font-bold ': 'font-normal'}`}>POI(localizações)</Link>
           <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Diferenciais' ? 'font-bold ': 'font-normal'}`}>Diferenciais</Link>
-          <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Tipos de uso' ? 'font-bold ': 'font-normal'}`}>Tipos de uso</Link>
+          <Link to={'/TiposDeUso'}  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Tipos de uso' ? 'font-bold ': 'font-normal'}`}>Tipos de uso</Link>
           <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Empreendimentos' ? 'font-bold ': 'font-normal'}`}>Empreendimentos</Link>
           {role === 'admin' ? (
             <>

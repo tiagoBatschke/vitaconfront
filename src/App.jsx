@@ -17,6 +17,7 @@ import BairrosScreen from './screens/BairrosScreen.jsx'
 import EditBairroscreen from './screens/editBairrosScreen.jsx'
 import AddCidadesScreen from './screens/addCidadesScreen.jsx'
 import EditCidadesScreen from './screens/editCidadesScreen.jsx'
+import TiposDeUsoScreen from './screens/tiposDeUsoScreen.jsx'
 
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
         <Route path ='/Clientes' element={<ClienteScreen/>}/>
         <Route path ='/Clientes/newCliente' element={<AddClienteScreen/>}/>
         <Route path="/Clientes/editCliente/:id" element={<EditeClienteScreen/>} />
+
+        <Route path ='/TiposDeUso' element={<TiposDeUsoScreen/>}/>
+        <Route path ='/TiposDeUso/newTiposDeUso' element={<AddClienteScreen/>}/>
+        <Route path="/TiposDeUso/editTiposDeUso/:id" element={<EditeClienteScreen/>} />
         
         <Route path ='/Projetos' element={<ProjetosScreen/>}/>
         <Route path="/Projetos/addProjeto" element={<AddProjetosScreen/>} />

@@ -27,7 +27,8 @@ const AddClienteScreen = () => {
   const [campoFaltante, setCampoFaltante]=  useState(false)
   const [styledInput, setStyledInput]=  useState('border-red-600 border-[2px]')
 
-
+  const [toggleLogOut, setToggleLogOut] = useState(false)
+  const [userOptions, setUserOptions] =useState(<div className='text-center text-white -mb-8 mt-2 w-[90%] -ml-[10%] bg-slate-500 z-10' onClick={()=>{localStorage.setItem('token', ''), setScreen('gg')}}>Log Out</div>)
 
   const navigate = useNavigate()
 
@@ -59,7 +60,7 @@ const AddClienteScreen = () => {
 
 
     checkToken();
-  }, []);
+  }, [screen]);
 
 
 
@@ -171,9 +172,12 @@ function createCliente() {
         <div className='w-[100%] h-[10vh] bg-[#F9F9F9] border-b flex '>
           <div className='w-[95%] flex items-center justify-between'>
             <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/votacon_logo.jpg?raw=true" className='w-[15%] h-[8vh] ' alt="" />
-            <div className='flex items-center justify-between w-[4%] hover:cursor-pointer'>
-              <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
-              <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/down.png?raw=true" className='w-[0.8rem] h-[0.8rem]' alt="" />
+            <div className='flex flex-col items-center justify-between w-[5%] hover:cursor-pointer'>
+              <div className='flex items-center justify-between w-[100%] hover:cursor-pointer' onClick={()=>{setToggleLogOut(!toggleLogOut)}}>
+                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/icon-Png.png?raw=true" className='w-[3rem] h-[3rem]' alt="" />
+                <img src="https://github.com/tiagoBatschke/vitaconfront/blob/main/src/assets/down.png?raw=true" className='w-[0.8rem] h-[0.8rem]' alt="" />
+              </div>
+              {toggleLogOut === true ? userOptions : null}
             </div>
           </div>
         </div>
