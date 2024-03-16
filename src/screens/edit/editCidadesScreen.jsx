@@ -1,17 +1,20 @@
 import React, { useEffect, useState, useContext  } from 'react'
 import { Link, Route, Routes, useNavigate} from "react-router-dom"
-import axios from '../api/axios'
+import axios from '../../api/axios'
 import { useParams } from 'react-router-dom';
   
-import LateralBar from '../components/lateralBar'
-import UploadImagem from '../components/uploadImagem'
+import LateralBar from '../../components/lateralBar'
+import UploadImagem from '../../components/uploadImagem'
 
 
 const EditCidadesScreen = () => {
   const { id } = useParams();
   const [screen, setScreen] =useState('a')
     
-    
+  const [bairros, setBairros] =useState(null)
+  const [bairroId, setBairroId] =useState(null)
+  const [bairrosStyled, setBairrosStyled]= useState(null)
+
   const [nome, setNome]= useState('')
   const [ufs, setUfs] = useState([]);
   const [selectedUf, setSelectedUf] = useState('');
@@ -56,7 +59,7 @@ const EditCidadesScreen = () => {
 
 
   const validateInputs = () => {
-    if ( !nome || !selectedUf) {
+    if ( !nome || !selectedUf || !bairroId) {
       setCampoFaltante(true)
       return false;
     }
@@ -76,6 +79,8 @@ const EditCidadesScreen = () => {
       
       setNome(response.data.cidade.nome)
       setSelectedUf(response.data.cidade.uf)
+      setBairroId(response.data.cidade.bairro)
+   
         
     })
     .catch(error => {
@@ -94,7 +99,8 @@ const EditCidadesScreen = () => {
 
     axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades/${id}`, {
         nome: nome,
-        uf: selectedUf 
+        uf: selectedUf,
+        bairro: bairroId
     }, {
         withCredentials: true,
         headers: {
@@ -134,16 +140,64 @@ const EditCidadesScreen = () => {
 useEffect(() => {
  
   fetchCidade()
+  fetchBairros()
 }, [screen]);
 
 
+function fetchBairros() {
+
+  axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/bairros',  {
+    withCredentials: true,
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  })
+  .then(response => {
+      setBairros(response.data)
+  })
+  .catch(error => {
+      console.error('Erro:', error);
+  }); 
+
+}
 
 useEffect(() => {
   
 }, [ campoFaltante]);
 
 
+useEffect(() => {
+
+  if (bairros != null && bairros.bairros) {
+    setBairrosStyled( bairros.bairros.map((item) => {
+      // Função para formatar a data
+      const formatDate = (dateString) => {
+        const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
+        const match = regex.exec(dateString);
+        if (match) {
+          const year = match[1];
+          const month = match[2];
+          const day = match[3];
+          return `${day}/${month}/${year}`;
+        }
+        return dateString; // Retorna a string original se não houver correspondência
+      };
+
+      
+      return (
+        <option key={item.id} value={item.id}>{item.nome.toUpperCase()}</option>
+      );
+    }));
+  }
+  
+}, [bairros, screen]);
+
  
+const handleSelectChange = (event) => {
+  console.log(event.target.value)
+  setBairroId(event.target.value)
+
+};
  
  return (
       <div className='w-[100%]'>
@@ -187,6 +241,17 @@ useEffect(() => {
                             </div>
                             <p className={ campoFaltante === true && !selectedUf  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
                         </div>
+                        <div className='w-[30%] h-[6vh] ml-[10%]'>
+
+                          <div className={`w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !bairroId  ? styledInput : 'border-black'}`}>
+                                {/* Botão para abrir/fechar o dropdown */}
+                                <select onChange={handleSelectChange} value={bairroId} className={`w-[100%] h-[100%] flex text-slate-400 `}>
+                                  <option value="">Selecione um bairro</option>
+                                  {bairrosStyled}
+                                </select>
+                              </div>
+                              <p className={ campoFaltante === true && !bairroId  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
+                          </div>
                         <div className='w-[13%] ml-[8.5%]  h-[6vh]'>
                             <button className='w-[100%] border border-[#70AD47]' onClick={updateCidade}>Salvar</button>
                         </div>

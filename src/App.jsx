@@ -4,20 +4,22 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { Route, Routes} from "react-router-dom"
 import LoginScreen from './screens/LoginScreen.jsx'
-import ClienteScreen from './screens/ClienteScreen.jsx'
+import ClienteScreen from './screens/show/ClienteScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
 
-import ProjetosScreen from './screens/ProjetosScreen.jsx'
-import AddClienteScreen from './screens/addClienteScreen.jsx'
-import EditeClienteScreen from './screens/editeClient.jsx'
-import EditProjetoscreen from './screens/editProjetos.jsx'
-import AddProjetosScreen from './screens/addProjetosScreen.jsx'
-import CidadesBairrosScreen from './screens/cidadesBairrosScreen.jsx'
-import BairrosScreen from './screens/BairrosScreen.jsx'
-import EditBairroscreen from './screens/editBairrosScreen.jsx'
-import AddCidadesScreen from './screens/addCidadesScreen.jsx'
-import EditCidadesScreen from './screens/editCidadesScreen.jsx'
-import TiposDeUsoScreen from './screens/tiposDeUsoScreen.jsx'
+import ProjetosScreen from './screens/show/ProjetosScreen.jsx'
+import AddClienteScreen from './screens/add/addClienteScreen.jsx'
+import EditeClienteScreen from './screens/edit/editeClient.jsx'
+import EditProjetoscreen from './screens/edit/editProjetos.jsx'
+import AddProjetosScreen from './screens/add/addProjetosScreen.jsx'
+import CidadesBairrosScreen from './screens/show/cidadesBairrosScreen.jsx'
+import BairrosScreen from './screens/show/BairrosScreen.jsx'
+import EditBairroscreen from './screens/edit/editBairrosScreen.jsx'
+import AddCidadesScreen from './screens/add/addCidadesScreen.jsx'
+import EditCidadesScreen from './screens/edit/editCidadesScreen.jsx'
+import TiposDeUsoScreen from './screens/show/tiposDeUsoScreen.jsx'
+import AddTiposDeUsoScreen from './screens/add/addTiposDeUsoScreen.jsx'
+import EditTiposDeUsoScreen from './screens/edit/editTiposDeUso.jsx'
 
 
 function App() {
@@ -34,8 +36,8 @@ function App() {
         <Route path="/Clientes/editCliente/:id" element={<EditeClienteScreen/>} />
 
         <Route path ='/TiposDeUso' element={<TiposDeUsoScreen/>}/>
-        <Route path ='/TiposDeUso/newTiposDeUso' element={<AddClienteScreen/>}/>
-        <Route path="/TiposDeUso/editTiposDeUso/:id" element={<EditeClienteScreen/>} />
+        <Route path ='/TiposDeUso/newTiposDeUso' element={<AddTiposDeUsoScreen/>}/>
+        <Route path="/TiposDeUso/editTiposDeUso/:id" element={<EditTiposDeUsoScreen/>} />
         
         <Route path ='/Projetos' element={<ProjetosScreen/>}/>
         <Route path="/Projetos/addProjeto" element={<AddProjetosScreen/>} />

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext  } from 'react'
 import { Link, Route, Routes, useNavigate} from "react-router-dom"
-import axios from '../api/axios'
+import axios from '../../api/axios'
   
-import LateralBar from '../components/lateralBar'
-import UploadImagem from '../components/uploadImagem'
+import LateralBar from '../../components/lateralBar'
+import UploadImagem from '../../components/uploadImagem'
 
 
 const AddClienteScreen = () => {
