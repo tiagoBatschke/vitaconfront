@@ -20,6 +20,7 @@ import EditCidadesScreen from './screens/edit/editCidadesScreen.jsx'
 import TiposDeUsoScreen from './screens/show/tiposDeUsoScreen.jsx'
 import AddTiposDeUsoScreen from './screens/add/addTiposDeUsoScreen.jsx'
 import EditTiposDeUsoScreen from './screens/edit/editTiposDeUso.jsx'
+import UserByClientsScreen from './screens/show/UserByClientsScreen.jsx'
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path ='/Clientes' element={<ClienteScreen/>}/>
         <Route path ='/Clientes/newCliente' element={<AddClienteScreen/>}/>
         <Route path="/Clientes/editCliente/:id" element={<EditeClienteScreen/>} />
+        <Route path ='/Clientes/UserByClientsScreen/:id' element={<UserByClientsScreen/>}/>
 
         <Route path ='/TiposDeUso' element={<TiposDeUsoScreen/>}/>
         <Route path ='/TiposDeUso/newTiposDeUso' element={<AddTiposDeUsoScreen/>}/>
@@ -48,6 +50,7 @@ function App() {
         <Route path ='/CidadesBairros/newCidades' element={<AddCidadesScreen/>}/>
         <Route path ='/CidadesBairros/editCidades/:id' element={<EditCidadesScreen/>}/>
         <Route path ='/CidadesBairros/Bairros/editBairros/:id' element={<EditBairroscreen/>}/>
+
       </Routes>
     
      </>

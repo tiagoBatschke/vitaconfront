@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext  } from 'react'
 import { Link, Route, Routes, useNavigate} from "react-router-dom"
+import { useParams } from 'react-router-dom';
 import axios from '../../api/axios'
   
 import LateralBar from '../../components/lateralBar'
 import UploadImagem from '../../components/uploadImagem'
 
 
-const ClienteScreen = () => {
-
+const UserByClientsScreen = () => {
+    const { id } = useParams();
 
   const [clientesStyled, setClientesStyled]= useState(null)
   const [screen, setScreen] =useState('a')
@@ -51,7 +52,7 @@ const ClienteScreen = () => {
 
   function fetchClientes() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
+    axios.get(`https://testevitacon-bd7d417ef875.herokuapp.com/api/UserByClient/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -59,6 +60,7 @@ const ClienteScreen = () => {
     })
     .then(response => {
         setClientes(response.data)
+        
     })
     .catch(error => {
         console.error('Erro:', error);
@@ -91,8 +93,8 @@ useEffect(() => {
 
   useEffect(() => {
 
-    if (clientes != null && clientes.clientes) {
-      setClientesStyled(clientes.clientes.map((item) => {
+    if (clientes != null) {
+      setClientesStyled(clientes.map((item) => {
         // Função para formatar a data
         const formatDate = (dateString) => {
           const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
@@ -105,10 +107,11 @@ useEffect(() => {
           }
           return dateString; // Retorna a string original se não houver correspondência
         };
-  
+        
+        console.log(item)
         return (
           <tr className='h-[5vh] w-[100%]' key={item.id}>
-            <td className=' w-[23%] text-center'>{item.nome.toUpperCase()}</td>
+            <td className=' w-[23%] text-center'>{item.name.toUpperCase()}</td>
             <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
             <td className=' w-[23%] text-center'>{formatDate(item.status)}</td>
             <td className='w-[31%]'>
@@ -172,4 +175,4 @@ useEffect(() => {
   )
 }
 
-export default ClienteScreen
+export default UserByClientsScreen
