@@ -22,7 +22,7 @@ function LateralBar({user, screen }) {
       <div className='flex flex-col  h-[60%]  w-[90%]  justify-evenly '>
           <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Institucional' ? 'font-bold ': 'font-normal'}`}>Institucional</Link>
           <Link to={'/CidadesBairros'}  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Cidades' ? 'font-bold ': 'font-normal'}`}>Cidades / Bairros</Link>
-          <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'POI' ? 'font-bold ': 'font-normal'}`}>POI(localizações)</Link>
+          <Link to={'/Poi'}  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'POI' ? 'font-bold ': 'font-normal'}`}>POI(localizações)</Link>
           <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Diferenciais' ? 'font-bold ': 'font-normal'}`}>Diferenciais</Link>
           <Link to={'/TiposDeUso'}  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Tipos de uso' ? 'font-bold ': 'font-normal'}`}>Tipos de uso</Link>
           <Link  className={`hover:cursor-pointer hover:font-bold text-white ${screen === 'Empreendimentos' ? 'font-bold ': 'font-normal'}`}>Empreendimentos</Link>

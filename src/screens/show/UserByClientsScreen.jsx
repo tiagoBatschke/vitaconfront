@@ -10,9 +10,9 @@ import UploadImagem from '../../components/uploadImagem'
 const UserByClientsScreen = () => {
     const { id } = useParams();
 
-  const [clientesStyled, setClientesStyled]= useState(null)
+  const [usersStyled, setusersStyled]= useState(null)
   const [screen, setScreen] =useState('a')
-  const [clientes, setClientes] =useState(null)
+  const [users, setusers] =useState(null)
 
   const navigate = useNavigate()
 
@@ -50,7 +50,7 @@ const UserByClientsScreen = () => {
     checkToken();
   }, [screen]);
 
-  function fetchClientes() {
+  function fetchusers() {
 
     axios.get(`https://testevitacon-bd7d417ef875.herokuapp.com/api/UserByClient/${id}`,  {
       withCredentials: true,
@@ -59,7 +59,7 @@ const UserByClientsScreen = () => {
         }
     })
     .then(response => {
-        setClientes(response.data)
+        setusers(response.data)
         
     })
     .catch(error => {
@@ -68,9 +68,9 @@ const UserByClientsScreen = () => {
  
 }
 
-  function deleteClientes(id) {
+  function deleteusers(id) {
 
-    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${id}`,  {
+    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/users/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -87,14 +87,14 @@ const UserByClientsScreen = () => {
 }
 
 useEffect(() => {
-    fetchClientes()
+    fetchusers()
   }, [screen])
 
 
   useEffect(() => {
 
-    if (clientes != null) {
-      setClientesStyled(clientes.map((item) => {
+    if (users != null) {
+      setusersStyled(users.map((item) => {
         // Função para formatar a data
         const formatDate = (dateString) => {
           const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
@@ -108,24 +108,18 @@ useEffect(() => {
           return dateString; // Retorna a string original se não houver correspondência
         };
         
-        console.log(item)
+
         return (
           <tr className='h-[5vh] w-[100%]' key={item.id}>
             <td className=' w-[23%] text-center'>{item.name.toUpperCase()}</td>
             <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
             <td className=' w-[23%] text-center'>{formatDate(item.status)}</td>
-            <td className='w-[31%]'>
-              <div className='w-[70%] ml-[30%]'>      
-                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Clientes/editCliente/${item.id}`);}}>Editar</button>
-                <button className='w-[10%] text-red-500 font-bold  ' onClick={()=>{deleteClientes(item.id)}}>X</button>
-              </div>
-            </td>
           </tr>
         );
       }));
     }
     
-  }, [clientes]);
+  }, [users]);
 
  
   
@@ -146,11 +140,11 @@ useEffect(() => {
           </div>
         </div>
         <div className='flex h-[90vh] w-[100%]'>      
-         <LateralBar user={user} screen={'Clientes'}/>
+         <LateralBar user={user} screen={'users'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
               <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>Clientes</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/Clientes/newCliente');}}>Novo Cliente</button>
+              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Clientes/addUserByClientsScreen/${id}`);}}>Novo usuario</button>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>    
                     <table className='w-[90%] max-h-[50vh] min-h-[15vh]'>
@@ -159,11 +153,10 @@ useEffect(() => {
                           <th className='w-[23%]'>Nome</th>
                           <th className='w-[23%]'>Data de inclusão</th>
                           <th className='w-[23%]'>Status</th>
-                          <th className='w-[31%]'>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {clientesStyled}
+                        {usersStyled}
                       </tbody>
                     </table>     
             </div>

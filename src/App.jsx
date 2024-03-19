@@ -21,6 +21,10 @@ import TiposDeUsoScreen from './screens/show/tiposDeUsoScreen.jsx'
 import AddTiposDeUsoScreen from './screens/add/addTiposDeUsoScreen.jsx'
 import EditTiposDeUsoScreen from './screens/edit/editTiposDeUso.jsx'
 import UserByClientsScreen from './screens/show/UserByClientsScreen.jsx'
+import AddUserByClients from './screens/add/addUserByClients.jsx'
+import PoiScreen from './screens/show/PoiScreen.jsx'
+import CategoriasScreen from './screens/show/CategoriasScreen.jsx'
+import EditCategoria from './screens/edit/editCategoria.jsx'
 
 
 function App() {
@@ -36,6 +40,7 @@ function App() {
         <Route path ='/Clientes/newCliente' element={<AddClienteScreen/>}/>
         <Route path="/Clientes/editCliente/:id" element={<EditeClienteScreen/>} />
         <Route path ='/Clientes/UserByClientsScreen/:id' element={<UserByClientsScreen/>}/>
+        <Route path ='/Clientes/addUserByClientsScreen/:id' element={<AddUserByClients/>}/>
 
         <Route path ='/TiposDeUso' element={<TiposDeUsoScreen/>}/>
         <Route path ='/TiposDeUso/newTiposDeUso' element={<AddTiposDeUsoScreen/>}/>
@@ -49,6 +54,12 @@ function App() {
         <Route path ='/CidadesBairros/Bairros' element={<BairrosScreen/>}/>
         <Route path ='/CidadesBairros/newCidades' element={<AddCidadesScreen/>}/>
         <Route path ='/CidadesBairros/editCidades/:id' element={<EditCidadesScreen/>}/>
+        <Route path ='/CidadesBairros/Bairros/editBairros/:id' element={<EditBairroscreen/>}/>
+
+        <Route path ='/Poi' element={<PoiScreen/>}/>
+        <Route path ='/Poi/Categorias' element={<CategoriasScreen/>}/>
+        <Route path ='/CidadesBairros/newCidades' element={<AddCidadesScreen/>}/>
+        <Route path ='/Poi/editCategorias/:id' element={<EditCategoria/>}/>
         <Route path ='/CidadesBairros/Bairros/editBairros/:id' element={<EditBairroscreen/>}/>
 
       </Routes>

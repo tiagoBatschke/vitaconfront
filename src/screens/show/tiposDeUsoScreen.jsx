@@ -147,7 +147,7 @@ useEffect(() => {
           </div>
         </div>
         <div className='flex h-[90vh] w-[100%]'>      
-         <LateralBar user={user} screen={'tiposDeUso'}/>
+         <LateralBar user={user} screen={'Tipos de uso'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
               <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>tiposDeUso</h2>
