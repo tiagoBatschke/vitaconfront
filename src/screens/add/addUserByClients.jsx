@@ -160,9 +160,9 @@ const validateInputs = () => {
                         <p className={errors.email ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >{errors.email}</p>
                         <input className={`w-[80%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !telefone ? styledInput : 'border-black'}`} placeholder='telefone celular' type="tel" value={telefone} onChange={(e) => setTelefone(e.target.value)}></input>
                         <p className={errors.telefone ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >{errors.telefone}</p>
-                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
+                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password' type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input>
                         <p className={errors.password ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >{errors.password}</p>
-                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="text" value={password_confirmation} onChange={(e)=>{setPassword_confirmation(e.target.value)}}></input>
+                        <input  className='w-[80%] p-1 ml-[0%] h-[4vh] border border-black' placeholder='Password confirmation' type="password" value={password_confirmation} onChange={(e)=>{setPassword_confirmation(e.target.value)}}></input>
                         <p className={errors.password ? 'w-[80%] text-red-500 -mt-[2vh]' : 'invisible h-0 w-0 -mt-[2vh]'} >{errors.password}</p>
                         <button className='w-[30%] ml-[50%] border border-[#70AD47]' onClick={registerUser }>Salvar</button>
                       </div>
