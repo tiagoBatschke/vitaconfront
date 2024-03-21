@@ -170,12 +170,12 @@ const handleSelectChange = (event) => {
          <LateralBar user={user} screen={'Cidades'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/CidadesCategoria')}}>Cidades / Categoria</h2>
+              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/Poi')}}>Pois</h2>
 
             </div>
             <div className='flex items-center justify-evenly w-[90%] h-[5vh]  border-b mb-5'>
-               <Link to={'/CidadesCategoria/newCidades'}  className={`hover:cursor-pointer font-bold`}>Base</Link>
-               <Link to={'/CidadesCategoria/Categoria'}  className={`hover:cursor-pointer hove:font-bold`}>Categoria</Link>
+                <Link to={'/Poi'}  className={`hover:cursor-pointer hover:font-bold`}>(POI)</Link>
+               <Link to={'/Poi/Categorias'}  className={`hover:cursor-pointer hover:font-bold`}>Categorias</Link>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>     
                     <div className='w-[90%] h-[10vh] flex  items-center '>

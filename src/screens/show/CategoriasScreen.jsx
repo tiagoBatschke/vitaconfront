@@ -185,7 +185,7 @@ useEffect(() => {
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
               <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/Poi')}}>(POI)</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/CidadesCategorias/newCidades');}}>Novo POI</button>
+              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/Poi/newPois');}}>Novo POI</button>
             </div>
             <div className='flex items-center justify-evenly w-[90%] h-[5vh]  border-b mb-5'>
                 <Link to={'/Poi'}  className={`hover:cursor-pointer hover:font-bold`}>(POI)</Link>

@@ -33,6 +33,7 @@ import EditPoiScreen from './screens/edit/editPoiScreen.jsx'
 import AddDiferenciais from './screens/add/addDiferenciais.jsx'
 import DiferenciaisScreen from './screens/show/diferenciaisScreen.jsx'
 import EditDiferencial from './screens/edit/editDiferencial.jsx'
+import EditEmpreendimentos from './screens/edit/editEmpreendimentos.jsx'
 
 
 function App() {
@@ -76,6 +77,8 @@ function App() {
 
         <Route path ='/Empreendimentos' element={<EmpreendimentosScreen/>}/>
         <Route path ='/Empreendimentos/infoBasica' element={<InfoBasica/>}/>
+        <Route path ='/Empreendimentos/infoBasica/:id' element={<EditEmpreendimentos/>}/>
+        
         <Route path ='/Poi/Categorias' element={<CategoriasScreen/>}/>
         <Route path ='/CidadesBairros/newCidades' element={<AddCidadesScreen/>}/>
         <Route path ='/Poi/editCategorias/:id' element={<EditCategoria/>}/>

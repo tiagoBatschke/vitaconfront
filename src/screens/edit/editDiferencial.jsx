@@ -133,10 +133,10 @@ const handleSelectChange = (event) => {
           </div>
         </div>
         <div className='flex h-[90vh] w-[100%]'>      
-         <LateralBar user={user} screen={'Cidades'}/>
+         <LateralBar user={user} screen={'Diferenciais'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/CidadesBairros')}}>Diferenciais</h2>
+              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/Diferenciais')}}>Diferenciais</h2>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>     
                     <div className='w-[90%] h-[10vh] flex  items-center '>

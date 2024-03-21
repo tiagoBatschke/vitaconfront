@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext  } from 'react'
-import { Link, Route, Routes, useNavigate} from "react-router-dom"
+import { Link, Route, Routes, useNavigate, useParams} from "react-router-dom"
 import axios from '../../api/axios'
 
   
@@ -7,7 +7,7 @@ import LateralBar from '../../components/lateralBar'
 import UploadImagem from '../../components/uploadImagem'
 
 
-const InfoBasica = () => {
+const EditEmpreendimentos = () => {
     
   const [screen, setScreen] =useState('a')
   const [projetos, setProjetos] =useState(null)
@@ -42,6 +42,7 @@ const InfoBasica = () => {
   const [tiposDeUsoStyled, setTiposDeUsoStyled]= useState(null)
   const [tiposDeUso, setTiposDeUso] =useState(null)
 
+  const { id } = useParams();
 
   const  token = localStorage.getItem('token')
   const  user = localStorage.getItem('user')
@@ -75,6 +76,7 @@ const InfoBasica = () => {
     fetchBairros();
     fetchTiposDeUso();
     fetchprojetos();
+    fetchEmpreendimentos()
   }, [screen]);
 
 
@@ -112,6 +114,38 @@ const InfoBasica = () => {
   
   }
 
+
+  function fetchEmpreendimentos() {
+
+    axios.get(`http://127.0.0.1:8000/api/empreendimentos/${id}`,  {
+      withCredentials: true,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+       setNome(response.data.nome)
+       setBairroId(response.data.bairroId)
+       setProjetoId(response.data.projetoId)
+       setLatitudeLongitude(response.data.latitude_longitude)
+       setEndereco(response.data.endereco)
+       setAviso(response.data.aviso_legal)
+       setCorPrimaria(response.data.cor_primaria)
+       setCorSecundaria(response.data.cor_secundaria)
+       if (response.data.status === "ativo") {
+          setAtivo(true)
+          setInativo(false)
+       }else{
+          setAtivo(false)
+          setInativo(true)
+       }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    }); 
+  
+  }
+
   function fetchTiposDeUso() {
 
     axios.get('http://127.0.0.1:8000/api/tiposDeUso',  {
@@ -141,14 +175,14 @@ const InfoBasica = () => {
 
 
 
-  function createEmpreendimentos() {
+  function updateEmpreendimentos() {
 
     if (!validateInputs()) {
       return;
     }
 
 
-    axios.post('http://127.0.0.1:8000/api/empreendimentos', {
+    axios.put(`http://127.0.0.1:8000/api/empreendimentos/${id}`, {
         nome: nome,
         endereco: endereco,
         aviso_legal: aviso,
@@ -173,7 +207,7 @@ const InfoBasica = () => {
     })
     .then(response => {
         setScreen('')
-        console.log(response)
+       navigate('/Empreendimentos')
         
     })
     .catch(error => {
@@ -304,7 +338,7 @@ const handleAtivoClick = () => {
                         <div className='w-[80%] h-[6vh] ml-[0%]'>
                               <div className={`w-[100%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !ProjetoId  ? styledInput : 'border-black'}`}>
                                 {/* Botão para abrir/fechar o dropdown */}
-                                <select onChange={handleSelectProjectChange} className={`w-[100%] h-[100%] flex text-slate-400 `}>
+                                <select onChange={handleSelectProjectChange} value={ProjetoId} className={`w-[100%] h-[100%] flex text-slate-400 `}>
                                   <option value="">Selecione um Projeto</option>
                                   {projetosStyled}
                                 </select>
@@ -341,7 +375,7 @@ const handleAtivoClick = () => {
                     </div>    
               </div>         
             <div className='w-[90%]   h-[6vh] mt-[30vh]'>
-                <button className='w-[13%] ml-[90%] border border-[#70AD47]' onClick={createEmpreendimentos}>Salvar</button>
+                <button className='w-[13%] ml-[90%] border border-[#70AD47]' onClick={updateEmpreendimentos}>Salvar</button>
             </div>
           </div>
         </div>
@@ -351,4 +385,4 @@ const handleAtivoClick = () => {
   )
 }
 
-export default InfoBasica
+export default EditEmpreendimentos

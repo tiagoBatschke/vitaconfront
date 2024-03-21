@@ -157,14 +157,10 @@ const validateInputs = () => {
           </div>
         </div>
         <div className='flex h-[90vh] w-[100%]'>      
-         <LateralBar user={user} screen={'Projetos'}/>
+        <LateralBar user={user} screen={'POI'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/CidadesBairros')}}>Cidades / Bairros</h2>
-            </div>
-            <div className='flex items-center justify-evenly w-[90%] h-[5vh]  border-b mb-5'>
-                <Link to={'/Poi'}  className={`hover:cursor-pointer hover:font-bold`}>(POI)</Link>
-               <Link to={'/Poi/Categorias'}  className={`hover:cursor-pointer hover:font-bold`}>Categorias</Link>
+              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/Poi')}}>(POI)</h2>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>
                 <div className='w-[100%] h-[10vh]  flex '>

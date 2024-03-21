@@ -122,7 +122,7 @@ useEffect(() => {
             <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
             <td className='w-[31%]'>
               <div className='w-[70%] ml-[30%]'>      
-                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/EmpreendimentosBairros/editEmpreendimentos/${item.id}`);}}>Editar</button>
+                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Empreendimentos/infoBasica/${item.id}`);}}>Editar</button>
                 <button className='w-[10%] text-red-500 font-bold  ' onClick={()=>{deleteCidade(item.id)}}>X</button>
               </div>
             </td>
