@@ -7,7 +7,7 @@ import LateralBar from '../../components/lateralBar'
 import UploadImagem from '../../components/uploadImagem'
 
 
-const EditEmpreendimentos = () => {
+const EditEmpreendimentosImagens = () => {
     
   const [screen, setScreen] =useState('a')
   const [projetos, setProjetos] =useState(null)
@@ -19,13 +19,11 @@ const EditEmpreendimentos = () => {
   const [nome, setNome]= useState('')
   const [endereco, setEndereco]= useState('')
   const [aviso, setAviso]= useState('')
+  const [avisoImagem, setAvisoImagem]= useState('')
+  const [legenda, setLegenda]= useState('')
   const [latitudeLongitude, setLatitudeLongitude]= useState('')
   const [corPrimaria, setCorPrimaria]= useState('')
   const [corSecundaria, setCorSecundaria]= useState('')
-
-  const [ufs, setUfs] = useState([]);
-  const [selectedUf, setSelectedUf] = useState('');
-  const navigate = useNavigate()
 
   const [imagens, setImagens]= useState([])
   const [Videos, setVideos]= useState([])
@@ -33,6 +31,12 @@ const EditEmpreendimentos = () => {
   const [Unidades, setUnidades]= useState([])
   const [Diferenciais, setDiferenciais]= useState([])
   const [FichaTecnica, setFichaTecnica]= useState([])
+
+  const [novasImagens, setNovasImagens] = useState([]);
+
+  const [ufs, setUfs] = useState([]);
+  const [selectedUf, setSelectedUf] = useState('');
+  const navigate = useNavigate()
 
   const [campoFaltante, setCampoFaltante]=  useState(false)
   const [styledInput, setStyledInput]=  useState('border-red-400 border-[2px]')
@@ -49,6 +53,7 @@ const EditEmpreendimentos = () => {
   const [tiposDeUsoStyled, setTiposDeUsoStyled]= useState(null)
   const [tiposDeUso, setTiposDeUso] =useState(null)
 
+  const [SeloPreliminarValue, setSeloPreliminarValue] =useState(null)
   const { id } = useParams();
 
   const  token = localStorage.getItem('token')
@@ -178,7 +183,7 @@ const EditEmpreendimentos = () => {
   }
 
   const validateInputs = () => {
-    if (!nome || !endereco || !aviso || !latitudeLongitude || !corPrimaria || !corSecundaria) {
+    if (!nome || !endereco || !aviso || !latitudeLongitude || !corPrimaria || !corSecundaria || !avisoImagem) {
       setCampoFaltante(true);
       return false;
     }
@@ -189,13 +194,15 @@ const EditEmpreendimentos = () => {
 
 
 
-   function updateEmpreendimentos() {
+ function updateEmpreendimentos() {
 
     if (!validateInputs()) {
       return;
     }
 
-  
+    setNovasImagens([...novasImagens, {selo_preliminar: SeloPreliminarValue, aviso_legal: avisoImagem, legenda: legenda}]);
+    const imagensExistente = imagens ? imagens : [];
+    const imagensAtualizadas = [...imagensExistente, ...novasImagens];
 
     axios.put(`http://127.0.0.1:8000/api/empreendimentos/${id}`, {
         nome: nome,
@@ -207,7 +214,7 @@ const EditEmpreendimentos = () => {
         status:  ativo === true ? 'ativo' : 'inativo',
         bairroId: bairroId,
         projetoId: ProjetoId,
-        imagens: imagens,
+        imagens: imagensAtualizadas,
         videos: Videos,
         pois: Pois,
         unidades: Unidades,
@@ -303,13 +310,10 @@ useEffect(() => {
    
   const handleSelectChange = (event) => {
   
-    setBairroId(event.target.value)
+    setSeloPreliminarValue(event.target.value)
   };
    
-  const handleSelectProjectChange = (event) => {
-  
-    setProjetoId(event.target.value)
-  };
+
 
 
 const handleAtivoClick = () => {
@@ -347,48 +351,20 @@ const handleAtivoClick = () => {
             </div>
             <div className='flex   items-center justify-start w-[100%]'>     
               <div className='w-[50%] ml-[5%] -mb-7 h-[30vh] flex-col  items-center '>
-                        <div className='w-[80%] h-[6vh]'>
-                            <input className={`w-[100%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !nome  ? styledInput : 'border-black'}`} placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
-                            <p className={ campoFaltante === true && !nome  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
-                        </div>
-                        <div className='w-[80%] h-[6vh] ml-[0%]'>
-                              <div className={`w-[100%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !ProjetoId  ? styledInput : 'border-black'}`}>
-                                {/* Botão para abrir/fechar o dropdown */}
-                                <select onChange={handleSelectProjectChange} value={ProjetoId} className={`w-[100%] h-[100%] flex text-slate-400 `}>
-                                  <option value="">Selecione um Projeto</option>
-                                  {projetosStyled}
-                                </select>
-                              </div>
-                              <p className={ campoFaltante === true && !ProjetoId  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
-                        </div>
-                      <div className={`w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !bairroId  ? styledInput : 'border-black'}`}>
-                        <select onChange={handleSelectChange} value={bairroId} className={`w-[100%] h-[100%] flex text-slate-400 `}>
-                          <option value="">Selecione um bairro</option>
-                          {bairrosStyled}
+                  <div className={`w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !SeloPreliminarValue  ? styledInput : 'border-black'}`}>
+                        <select onChange={handleSelectChange} className={`w-[100%] h-[100%] flex text-slate-400 `}>
+                          <option value="">Selo Preliminar</option>
+                          <option value={true}>Sim</option>
+                          <option value={false}>Não</option>
                         </select>
-                      </div>
-                      <p className={ campoFaltante === true && !bairroId  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
-                      <input className={`w-[80%] mt-2 p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !endereco  ? styledInput : 'border-black'}`} placeholder='Endereço' type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)}></input>
-                      <p className={ campoFaltante === true && !endereco  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
-                      <input className={`w-[80%] mt-2 p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !aviso  ? styledInput : 'border-black'}`} placeholder='aviso legal' type="text" value={aviso} onChange={(e) => setAviso(e.target.value)}></input>
-                      <p className={ campoFaltante === true && !aviso  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
-                      <input className={`w-[80%] mt-2 p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !latitudeLongitude  ? styledInput : 'border-black'}`} placeholder='Latitude / Longitude (Google)' type="text" value={latitudeLongitude} onChange={(e) => setLatitudeLongitude(e.target.value)}></input>
-                      <p className={ campoFaltante === true && !latitudeLongitude  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
-                      <input className={`w-[80%] mt-2 p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !corPrimaria  ? styledInput : 'border-black'}`} placeholder='Cor Primaria' type="text" value={corPrimaria} onChange={(e) => setCorPrimaria(e.target.value)}></input>
-                      <p className={ campoFaltante === true && !corPrimaria  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
-                      <input className={`w-[80%] mt-2 p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !corSecundaria  ? styledInput : 'border-black'}`} placeholder='Cor Secundaria' type="text" value={corSecundaria} onChange={(e) => setCorSecundaria(e.target.value)}></input>
-                      <p className={ campoFaltante === true && !corSecundaria  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
-                </div>
-                    <div className='w-[50%] h-[30vh]  flex justify-evenly items-start'>
-                        <div className='w-[30%] flex justify-evenly items-center' onClick={handleAtivoClick}>
-                            <label className='text-[1rem]' htmlFor="">Ativo</label>
-                            <div className={` ${ativoStyle} hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} ></div>
-                        </div>
-                        <div className='w-[30%] flex justify-evenly items-center' onClick={handleInativoClick}>
-                            <label className='text-[1rem]' htmlFor="">Inativo</label>
-                            <div className={`${inativoStyle} hover:cursor-pointer border w-[1rem] h-[1rem] rounded-full`} ></div>
-                        </div>
-                    </div>    
+                  </div>
+                  <p className={ campoFaltante === true && !SeloPreliminarValue  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
+                  <input className={`w-[80%] mt-2 p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !avisoImagem  ? styledInput : 'border-black'}`} placeholder='aviso legal' type="text" value={avisoImagem} onChange={(e) => setAvisoImagem(e.target.value)}></input>
+                  <p className={ campoFaltante === true && !avisoImagem  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
+                  <input className={`w-[80%] mt-2 p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !legenda  ? styledInput : 'border-black'}`} placeholder='Legenda' type="text" value={legenda} onChange={(e) => setLegenda(e.target.value)}></input>
+                  <p className={ campoFaltante === true && !legenda  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
+                </div>  
+                  
               </div>         
             <div className='w-[90%]   h-[6vh] mt-[30vh]'>
                 <button className='w-[13%] ml-[90%] border border-[#70AD47]' onClick={updateEmpreendimentos}>Salvar</button>
@@ -401,4 +377,4 @@ const handleAtivoClick = () => {
   )
 }
 
-export default EditEmpreendimentos
+export default EditEmpreendimentosImagens
