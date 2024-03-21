@@ -345,6 +345,10 @@ const handleAtivoClick = () => {
               <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/Empreendimentos')}}>Empreendimentos</h2>
 
             </div>
+            <div className='flex items-center justify-evenly w-[90%] h-[5vh]  border-b mb-5'>
+               <Link to={`/Empreendimentos/infoBasica/${id}`}  className={`hover:cursor-pointer hover:font-bold`}>Informações Basicas</Link>
+               <Link to={`/Empreendimentos/ShowImagens/${id}`}  className={`hover:cursor-pointer hover:font-bold`}>Imagens</Link>
+            </div>
             <div className='flex   items-center justify-start w-[100%]'>     
               <div className='w-[50%] ml-[5%] -mb-7 h-[30vh] flex-col  items-center '>
                         <div className='w-[80%] h-[6vh]'>
