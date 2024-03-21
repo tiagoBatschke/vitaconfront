@@ -6,16 +6,15 @@ import LateralBar from '../../components/lateralBar'
 import UploadImagem from '../../components/uploadImagem'
 
 
-const AddCidadesScreen = () => {
+const AddDiferenciais = () => {
     
   const [screen, setScreen] =useState('a')
   const [bairros, setBairros] =useState(null)
-  const [bairroId, setBairroId] =useState(null)
+  const [AreaComumValue, setAreaComumValue] =useState(null)
   const [bairrosStyled, setBairrosStyled]= useState(null)
     
   const [nome, setNome]= useState('')
-  const [ufs, setUfs] = useState([]);
-  const [selectedUf, setSelectedUf] = useState('');
+
   const navigate = useNavigate()
 
   const [campoFaltante, setCampoFaltante]=  useState(false)
@@ -55,7 +54,7 @@ const AddCidadesScreen = () => {
   }, [screen]);
 
   const validateInputs = () => {
-    if ( !nome || !selectedUf || !bairroId) {
+    if ( !nome || !AreaComumValue) {
       setCampoFaltante(true)
       return false;
     }
@@ -65,34 +64,18 @@ const AddCidadesScreen = () => {
 
 
 
-  function fetchBairros() {
 
-    axios.get('http://127.0.0.1:8000/api/bairros',  {
-      withCredentials: true,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        setBairros(response.data)
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-    }); 
- 
-}
 
-  function createCidade() {
+  function createDiferencial() {
 
     if (!validateInputs()) {
       return;
     }
 
 
-    axios.post('http://127.0.0.1:8000/api/cidades', {
+    axios.post('http://127.0.0.1:8000/api/diferenciais', {
         nome: nome,
-        uf: selectedUf, 
-        bairro: bairroId 
+        area_comum: true
     }, {
         withCredentials: true,
         headers: {
@@ -100,69 +83,19 @@ const AddCidadesScreen = () => {
         }
     })
     .then(response => {
-        setScreen('')
-        setNome('')
-        setSelectedUf(null)
-        setCampoFaltante(false)
-        navigate('/CidadesBairros')
+        navigate('/Diferenciais')
     })
     .catch(error => {
         console.error('Erro:', error);
     });
   }
 
-  
-  useEffect(() => {
-    async function fetchUfs() {
-        try {
-            const response = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-            const data = await response.json();
-            setUfs(data);
-        } catch (error) {
-            console.error('Erro ao obter os UFs:', error);
-        }
-    }
-
-    fetchUfs();
-}, []);
-
-
-useEffect(() => {
-  fetchBairros()
-}, [screen])
-
-
-useEffect(() => {
-
-  if (bairros != null && bairros.bairros) {
-    setBairrosStyled( bairros.bairros.map((item) => {
-      // Função para formatar a data
-      const formatDate = (dateString) => {
-        const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
-        const match = regex.exec(dateString);
-        if (match) {
-          const year = match[1];
-          const month = match[2];
-          const day = match[3];
-          return `${day}/${month}/${year}`;
-        }
-        return dateString; // Retorna a string original se não houver correspondência
-      };
-
-      
-      return (
-        <option key={item.id} value={item.id}>{item.nome.toUpperCase()}</option>
-      );
-    }));
-  }
-  
-}, [bairros, screen]);
 
  
 const handleSelectChange = (event) => {
-
-  setBairroId(event.target.value)
-
+  
+  setAreaComumValue(event.target.value)
+ 
 };
  
  return (
@@ -183,12 +116,7 @@ const handleSelectChange = (event) => {
          <LateralBar user={user} screen={'Cidades'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/CidadesBairros')}}>Cidades / Bairros</h2>
-
-            </div>
-            <div className='flex items-center justify-evenly w-[90%] h-[5vh]  border-b mb-5'>
-               <Link to={'/CidadesBairros/newCidades'}  className={`hover:cursor-pointer font-bold`}>Base</Link>
-               <Link to={'/CidadesBairros/Bairros'}  className={`hover:cursor-pointer hove:font-bold`}>Bairros</Link>
+              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/CidadesBairros')}}>Diferenciais</h2>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>     
                     <div className='w-[90%] h-[10vh] flex  items-center '>
@@ -197,30 +125,19 @@ const handleSelectChange = (event) => {
                             <p className={ campoFaltante === true && !nome  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
                         </div>
                         <div className='w-[30%] h-[6vh] ml-[10%]'>
-                            <div className={`w-[100%] p-1  h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !selectedUf  ? styledInput : 'border-black'}`}>
-                                {/* Botão para abrir/fechar o dropdown */}
-                                <select className={`w-[100%] h-[100%] flex text-slate-400`} name="uf" value={selectedUf} onChange={(e) => setSelectedUf(e.target.value)}>
-                                    <option value="">Selecione o UF</option>
-                                    {ufs.map((uf) => (
-                                        <option key={uf.id} value={uf.sigla}>{uf.sigla} - {uf.nome}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <p className={ campoFaltante === true && !selectedUf  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
-                        </div>
-                        <div className='w-[30%] h-[6vh] ml-[10%]'>
 
-                        <div className={`w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !bairroId  ? styledInput : 'border-black'}`}>
+                        <div className={`w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !AreaComumValue  ? styledInput : 'border-black'}`}>
                               {/* Botão para abrir/fechar o dropdown */}
                               <select onChange={handleSelectChange} className={`w-[100%] h-[100%] flex text-slate-400 `}>
-                                <option value="">Selecione um bairro</option>
-                                {bairrosStyled}
+                                <option value="">Area comum</option>
+                                <option value={true}>Sim</option>
+                                <option value={false}>Não</option>
                               </select>
                             </div>
-                            <p className={ campoFaltante === true && !bairroId  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
+                            <p className={ campoFaltante === true && !AreaComumValue  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
                         </div>
                         <div className='w-[13%] ml-[8.5%]  h-[6vh]'>
-                            <button className='w-[100%] border border-[#70AD47]' onClick={createCidade}>Salvar</button>
+                            <button className='w-[100%] border border-[#70AD47]' onClick={createDiferencial}>Salvar</button>
                         </div>
                     </div>  
             </div>
@@ -232,4 +149,4 @@ const handleSelectChange = (event) => {
   )
 }
 
-export default AddCidadesScreen
+export default AddDiferenciais

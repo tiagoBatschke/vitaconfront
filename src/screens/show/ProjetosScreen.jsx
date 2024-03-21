@@ -30,7 +30,7 @@ const ProjetosScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -57,7 +57,7 @@ const ProjetosScreen = () => {
 
   function fetchProjetos() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos',  {
+    axios.get('http://127.0.0.1:8000/api/projetos',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -74,7 +74,7 @@ const ProjetosScreen = () => {
 }
   function fetchClientes() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
+    axios.get('http://127.0.0.1:8000/api/clientes',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -91,7 +91,7 @@ const ProjetosScreen = () => {
 
   function deleteProjeto(id) {
 
-    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos/${id}`,  {
+    axios.delete(`http://127.0.0.1:8000/api/projetos/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -107,7 +107,7 @@ const ProjetosScreen = () => {
 }
 
 function createProjetos() {
-  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos', {
+  axios.post('http://127.0.0.1:8000/api/projetos', {
       nome: nome,
       cliente_id: clienteId, 
       tipos: tipo,
@@ -132,7 +132,7 @@ function createProjetos() {
 
 
 function updateProjetos() {
-  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos/${projetoId}`, {
+  axios.put(`http://127.0.0.1:8000/api/projetos/${projetoId}`, {
     nome: nome,
     cliente_id: clienteId, 
     tipos: tipo,

@@ -39,7 +39,7 @@ const EditTiposDeUsoScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -64,7 +64,7 @@ const EditTiposDeUsoScreen = () => {
 
   function fetchtiposDeUso() {
 
-    axios.get(`https://testevitacon-bd7d417ef875.herokuapp.com/api/tiposDeUso/${id}`,  {
+    axios.get(`http://127.0.0.1:8000/api/tiposDeUso/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -124,7 +124,7 @@ function updateTiposDeUso() {
     return;
   }
 
-  axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/tiposDeUso/${id}`, {
+  axios.put(`http://127.0.0.1:8000/api/tiposDeUso/${id}`, {
       nome: nome,
   }, {
       withCredentials: true,

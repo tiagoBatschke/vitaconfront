@@ -41,7 +41,7 @@ const AddProjetosScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -67,7 +67,7 @@ const AddProjetosScreen = () => {
 
   function fetchClientes() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
+    axios.get('http://127.0.0.1:8000/api/clientes',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -108,7 +108,7 @@ const validateInputs = () => {
     }
 
 
-    axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/projetos', {
+    axios.post('http://127.0.0.1:8000/api/projetos', {
         nome: nome,
         cliente_id: clienteId, 
         tipos: tipo,

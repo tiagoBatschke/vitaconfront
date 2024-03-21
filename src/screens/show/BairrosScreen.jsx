@@ -27,7 +27,7 @@ const BairrosScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -52,7 +52,7 @@ const BairrosScreen = () => {
 
   function fetchBairros() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/bairros',  {
+    axios.get('http://127.0.0.1:8000/api/bairros',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ const BairrosScreen = () => {
 
   function deleteBairro(id) {
 
-    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/bairros/${id}`,  {
+    axios.delete(`http://127.0.0.1:8000/api/bairros/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -106,7 +106,7 @@ useEffect(() => {
     }
 
 
-    axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/bairros', {
+    axios.post('http://127.0.0.1:8000/api/bairros', {
         nome: nome,
         regiao: regiao 
     }, {

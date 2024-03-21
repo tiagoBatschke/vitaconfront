@@ -21,7 +21,7 @@ const RegisterScreen = () => {
 
   const handleRegister  = async(event) => {
     event.preventDefault();
-    axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/register', {
+    axios.post('http://127.0.0.1:8000/api/register', {
       name: nome,
       email: email,
       password: password,

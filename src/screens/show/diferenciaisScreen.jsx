@@ -6,7 +6,7 @@ import LateralBar from '../../components/lateralBar'
 import UploadImagem from '../../components/uploadImagem'
 
 
-const TiposDeUsoScreen = () => {
+const DiferenciaisScreen = () => {
   const [email, setEmail]= useState('')
   const [nome, setNome]= useState('')
   const [cnpj, setCnpj]= useState('')
@@ -15,8 +15,8 @@ const TiposDeUsoScreen = () => {
   const [ativo, setAtivo]= useState(true)
   const [inativo, setInativo]= useState(false)
   const [logo, setLogo]= useState('')
-  const [screen, setScreen] =useState('a')
   const [tiposDeUsoStyled, setTiposDeUsoStyled]= useState(null)
+  const [screen, setScreen] =useState('a')
   const [tiposDeUso, setTiposDeUso] =useState(null)
   const [clienteId, setClienteId] =useState('')
   const [password, setPassword]= useState('')
@@ -60,13 +60,14 @@ const TiposDeUsoScreen = () => {
 
   function fetchtiposDeUso() {
 
-    axios.get('http://127.0.0.1:8000/api/tiposDeUso',  {
+    axios.get('http://127.0.0.1:8000/api/diferenciais',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
     .then(response => {
+     
         setTiposDeUso(response.data)
     })
     .catch(error => {
@@ -77,7 +78,7 @@ const TiposDeUsoScreen = () => {
 
   function deletetiposDeUso(id) {
 
-    axios.delete(`http://127.0.0.1:8000/api/tiposDeUso/${id}`,  {
+    axios.delete(`http://127.0.0.1:8000/api/diferenciais/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -100,8 +101,8 @@ useEffect(() => {
 
   useEffect(() => {
 
-    if (tiposDeUso != null && tiposDeUso.tiposDeUso) {
-      setTiposDeUsoStyled(tiposDeUso.tiposDeUso.map((item) => {
+    if (tiposDeUso != null && tiposDeUso) {
+      setTiposDeUsoStyled(tiposDeUso.map((item) => {
         // Função para formatar a data
         const formatDate = (dateString) => {
           const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
@@ -121,7 +122,7 @@ useEffect(() => {
             <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
             <td className='w-[31%]'>
               <div className='w-[70%] ml-[30%]'>      
-                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/tiposDeUso/editTiposDeUso/${item.id}`);}}>Editar</button>
+                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Diferenciais/editDiferenciais/${item.id}`);}}>Editar</button>
                 <button className='w-[10%] text-red-500 font-bold  ' onClick={()=>{deletetiposDeUso(item.id)}}>X</button>
               </div>
             </td>
@@ -150,8 +151,8 @@ useEffect(() => {
          <LateralBar user={user} screen={'Tipos de uso'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>tiposDeUso</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/TiposDeUso/newTiposDeUso');}}>Novo Tipo</button>
+              <h2 className='w-[10%] ml-[2%] hover:cursor-pointer' onClick={()=>{setScreen('')}}>Diferenciais</h2>
+              <button className='w-[15%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/Diferenciais/addDiferenciais');}}>Novo Diferencial</button>
             </div>
             <div className='flex flex-col items-center justify-evenly w-[100%]'>    
                     <table className='w-[90%] max-h-[50vh] min-h-[15vh]'>
@@ -175,4 +176,4 @@ useEffect(() => {
   )
 }
 
-export default TiposDeUsoScreen
+export default DiferenciaisScreen

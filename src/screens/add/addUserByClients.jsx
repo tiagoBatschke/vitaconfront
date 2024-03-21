@@ -38,7 +38,7 @@ const AddUserByClients = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -79,7 +79,7 @@ useEffect(() => {
   
 
 function registerUser() {
-  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/register', {
+  axios.post('http://127.0.0.1:8000/api/register', {
       name: nome,
       email: email,
       password: password,

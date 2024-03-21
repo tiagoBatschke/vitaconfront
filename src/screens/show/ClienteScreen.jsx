@@ -27,7 +27,7 @@ const ClienteScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -51,7 +51,7 @@ const ClienteScreen = () => {
 
   function fetchClientes() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes',  {
+    axios.get('http://127.0.0.1:8000/api/clientes',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -68,7 +68,7 @@ const ClienteScreen = () => {
 
   function deleteClientes(id) {
 
-    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/clientes/${id}`,  {
+    axios.delete(`http://127.0.0.1:8000/api/clientes/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`

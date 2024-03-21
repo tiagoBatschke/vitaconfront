@@ -34,7 +34,7 @@ const EditCidadesScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ const EditCidadesScreen = () => {
 
   function fetchCidade() {
 
-    axios.get(`https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades/${id}`,  {
+    axios.get(`http://127.0.0.1:8000/api/cidades/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -97,7 +97,7 @@ const EditCidadesScreen = () => {
     }
 
 
-    axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades/${id}`, {
+    axios.put(`http://127.0.0.1:8000/api/cidades/${id}`, {
         nome: nome,
         uf: selectedUf,
         bairro: bairroId
@@ -146,7 +146,7 @@ useEffect(() => {
 
 function fetchBairros() {
 
-  axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/bairros',  {
+  axios.get('http://127.0.0.1:8000/api/bairros',  {
     withCredentials: true,
       headers: {
           'Authorization': `Bearer ${token}`
@@ -194,7 +194,7 @@ useEffect(() => {
 
  
 const handleSelectChange = (event) => {
-  console.log(event.target.value)
+
   setBairroId(event.target.value)
 
 };

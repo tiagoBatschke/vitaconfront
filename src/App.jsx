@@ -24,7 +24,15 @@ import UserByClientsScreen from './screens/show/UserByClientsScreen.jsx'
 import AddUserByClients from './screens/add/addUserByClients.jsx'
 import PoiScreen from './screens/show/PoiScreen.jsx'
 import CategoriasScreen from './screens/show/CategoriasScreen.jsx'
+import EmpreendimentosScreen from './screens/show/EmpreendimentosScreen.jsx'
 import EditCategoria from './screens/edit/editCategoria.jsx'
+import InfoBasica from './screens/add/InfoBasica.jsx'
+
+import AddPoiScreen from './screens/add/addPoiScreen.jsx'
+import EditPoiScreen from './screens/edit/editPoiScreen.jsx'
+import AddDiferenciais from './screens/add/addDiferenciais.jsx'
+import DiferenciaisScreen from './screens/show/diferenciaisScreen.jsx'
+import EditDiferencial from './screens/edit/editDiferencial.jsx'
 
 
 function App() {
@@ -55,8 +63,19 @@ function App() {
         <Route path ='/CidadesBairros/newCidades' element={<AddCidadesScreen/>}/>
         <Route path ='/CidadesBairros/editCidades/:id' element={<EditCidadesScreen/>}/>
         <Route path ='/CidadesBairros/Bairros/editBairros/:id' element={<EditBairroscreen/>}/>
+        
+        <Route path ='/Diferenciais' element={<DiferenciaisScreen/>}/>
+        <Route path ='/Diferenciais/addDiferenciais' element={<AddDiferenciais/>}/>
+        <Route path ='/Diferenciais/editDiferenciais/:id' element={<EditDiferencial/>}/>
 
         <Route path ='/Poi' element={<PoiScreen/>}/>
+        <Route path ='/Poi/Categorias' element={<CategoriasScreen/>}/>
+        <Route path ='/Poi/newPois' element={<AddPoiScreen/>}/>
+        <Route path ='/Poi/editCategorias/:id' element={<EditCategoria/>}/>
+        <Route path ='/Poi/editPoi/:id' element={<EditPoiScreen/>}/>
+
+        <Route path ='/Empreendimentos' element={<EmpreendimentosScreen/>}/>
+        <Route path ='/Empreendimentos/infoBasica' element={<InfoBasica/>}/>
         <Route path ='/Poi/Categorias' element={<CategoriasScreen/>}/>
         <Route path ='/CidadesBairros/newCidades' element={<AddCidadesScreen/>}/>
         <Route path ='/Poi/editCategorias/:id' element={<EditCategoria/>}/>
@@ -69,3 +88,4 @@ function App() {
 }
 
 export default App
+

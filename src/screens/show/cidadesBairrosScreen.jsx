@@ -35,7 +35,7 @@ const CidadesBairrosScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ const CidadesBairrosScreen = () => {
 
   function fetchCidades() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades',  {
+    axios.get('http://127.0.0.1:8000/api/cidades',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -77,7 +77,7 @@ const CidadesBairrosScreen = () => {
 
   function deleteCidade(id) {
 
-    axios.delete(`https://testevitacon-bd7d417ef875.herokuapp.com/api/cidades/${id}`,  {
+    axios.delete(`http://127.0.0.1:8000/api/cidades/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`

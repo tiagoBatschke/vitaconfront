@@ -30,7 +30,7 @@ const EditCategoria = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -56,7 +56,7 @@ const EditCategoria = () => {
 
   function fetchBairro() {
 
-    axios.get(`https://testevitacon-bd7d417ef875.herokuapp.com/api/categorias/${id}`,  {
+    axios.get(`http://127.0.0.1:8000/api/categorias/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -64,7 +64,7 @@ const EditCategoria = () => {
     })
     .then(response => {
         setNome(response.data.Categoria.nome)
-        console.log(response.data)
+       
     })
     .catch(error => {
         console.error('Erro:', error);
@@ -94,7 +94,7 @@ const validateInputs = () => {
         return;
       }
     
-    axios.put(`https://testevitacon-bd7d417ef875.herokuapp.com/api/categorias/${id}`, {
+    axios.put(`http://127.0.0.1:8000/api/categorias/${id}`, {
       nome: nome,
     }, {
         withCredentials: true,
@@ -103,7 +103,7 @@ const validateInputs = () => {
         }
     })
     .then(response => {
-        console.log(response)
+    
         setScreen('')
         setNome('')
         setRegiao(null)

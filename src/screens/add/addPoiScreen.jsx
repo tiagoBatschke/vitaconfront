@@ -6,12 +6,17 @@ import LateralBar from '../../components/lateralBar'
 import UploadImagem from '../../components/uploadImagem'
 
 
-const CategoriasScreen = () => {
-  const [nome, setNome]= useState('')
-  const [CategoriasStyled, setCategoriasStyled]= useState(null)
+const AddPoiScreen = () => {
+    
   const [screen, setScreen] =useState('a')
-  const [Categorias, setCategorias] =useState(null)
-  const [regiao, setRegiao] =useState('')
+  const [Categoria, setCategoria] =useState(null)
+  const [categoriaId, setCategoriaId] =useState(null)
+  const [CategoriaStyled, setCategoriaStyled]= useState(null)
+    
+  const [nome, setNome]= useState('')
+  const [endereco, setEndereco]= useState('')
+
+  const [selectedUf, setSelectedUf] = useState('');
   const navigate = useNavigate()
 
   const [campoFaltante, setCampoFaltante]=  useState(false)
@@ -19,6 +24,7 @@ const CategoriasScreen = () => {
 
   const [toggleLogOut, setToggleLogOut] = useState(false)
   const [userOptions, setUserOptions] =useState(<div className='text-center text-white -mb-8 mt-2 w-[90%] -ml-[10%] bg-slate-500 z-10' onClick={()=>{localStorage.setItem('token', ''), setScreen('gg')}}>Log Out</div>)
+
 
   const  token = localStorage.getItem('token')
   const  user = localStorage.getItem('user')
@@ -49,8 +55,18 @@ const CategoriasScreen = () => {
     checkToken();
   }, [screen]);
 
+  const validateInputs = () => {
+    if ( !nome || !endereco || !categoriaId) {
+      setCampoFaltante(true)
+      return false;
+    }
+  
+    return true;
+  };
 
-  function fetchCategorias() {
+
+
+  function fetchCategoria() {
 
     axios.get('http://127.0.0.1:8000/api/categorias',  {
       withCredentials: true,
@@ -59,7 +75,8 @@ const CategoriasScreen = () => {
         }
     })
     .then(response => {
-        setCategorias(response.data)
+        setCategoria(response.data)
+        
     })
     .catch(error => {
         console.error('Erro:', error);
@@ -67,47 +84,17 @@ const CategoriasScreen = () => {
  
 }
 
-  function deleteBairro(id) {
-
-    axios.delete(`http://127.0.0.1:8000/api/categorias/${id}`,  {
-      withCredentials: true,
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(response => {
-        setScreen('a')
-    })
-    .catch(error => {
-      alert('cliente não pode ser apagado, pois está sendo utilizado em outra rota')
-        console.error('Erro:', error);
-    }); 
- 
-}
-
-useEffect(() => {
-    fetchCategorias()
-  }, [screen])
-
-
-  const validateInputs = () => {
-    if ( !nome) {
-      setCampoFaltante(true)
-      return false;
-    }
-  
-    return true;
-  };
-
-  function createCategorias() {
+  function createPoi() {
 
     if (!validateInputs()) {
       return;
     }
 
 
-    axios.post('http://127.0.0.1:8000/api/categorias', {
+    axios.post('http://127.0.0.1:8000/api/pois', {
         nome: nome,
+        endereco: endereco, 
+        categoria_id: categoriaId 
     }, {
         withCredentials: true,
         headers: {
@@ -117,54 +104,53 @@ useEffect(() => {
     .then(response => {
         setScreen('')
         setNome('')
-        setRegiao(null)
         setCampoFaltante(false)
+        navigate('/Poi')
     })
     .catch(error => {
         console.error('Erro:', error);
     });
+}
+
+
+
+
+useEffect(() => {
+  fetchCategoria()
+}, [screen])
+
+
+useEffect(() => {
+
+  if (Categoria != null && Categoria.Categorias) {
+    setCategoriaStyled(Categoria.Categorias.map((item) => {
+      // Função para formatar a data
+      const formatDate = (dateString) => {
+        const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
+        const match = regex.exec(dateString);
+        if (match) {
+          const year = match[1];
+          const month = match[2];
+          const day = match[3];
+          return `${day}/${month}/${year}`;
+        }
+        return dateString; // Retorna a string original se não houver correspondência
+      };
+
+      
+      return (
+        <option key={item.id} value={item.id}>{item.nome.toUpperCase()}</option>
+      );
+    }));
   }
-
-  useEffect(() => {
-
-    if (Categorias != null && Categorias.Categorias) {
-      setCategoriasStyled( Categorias.Categorias.map((item) => {
-        // Função para formatar a data
-        const formatDate = (dateString) => {
-          const regex = /^(\d{4})-(\d{2})-(\d{2})T.*/;
-          const match = regex.exec(dateString);
-          if (match) {
-            const year = match[1];
-            const month = match[2];
-            const day = match[3];
-            return `${day}/${month}/${year}`;
-          }
-          return dateString; // Retorna a string original se não houver correspondência
-        };
   
-        return (
-          <tr className='h-[5vh] w-[100%]' key={item.id}>
-            <td className=' w-[23%] text-center'>{item.nome.toUpperCase()}</td>
-            <td className=' w-[23%] text-center'>{formatDate(item.created_at)}</td>
-            <td className='w-[31%]'>
-              <div className='w-[70%] ml-[30%]'>      
-                <button className='w-[60%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate(`/Poi/editCategorias/${item.id}`)}}>Editar</button>
-                <button className='w-[10%] text-red-500 font-bold  ' onClick={()=>{deleteBairro(item.id)}}>X</button>
-              </div>
-            </td>
-          </tr>
-        );
-      }));
-    }
-    
-  }, [Categorias, screen]);
+}, [Categoria, screen]);
 
+ 
+const handleSelectChange = (event) => {
+  setCategoriaId(event.target.value)
 
-  const handleRegiaoChange = (event) => {
-    const selectedRegiao = event.target.value;
-    setRegiao(selectedRegiao)
-    
-  };
+};
  
  return (
       <div className='w-[100%]'>
@@ -181,37 +167,40 @@ useEffect(() => {
           </div>
         </div>
         <div className='flex h-[90vh] w-[100%]'>      
-        <LateralBar user={user} screen={'POI'}/>
+         <LateralBar user={user} screen={'Cidades'}/>
           <div className='flex flex-col items-center w-[83%] bg-[#F9F9F9]'>
             <div className='flex items-center justify-between w-[90%] h-[10vh]'>
-              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/Poi')}}>(POI)</h2>
-              <button className='w-[10%] mr-[2%] border border-[#70AD47]' onClick={()=>{navigate('/CidadesCategorias/newCidades');}}>Novo POI</button>
+              <h2 className='w-[20%] ml-[2%] hover:cursor-pointer' onClick={()=>{navigate('/CidadesCategoria')}}>Cidades / Categoria</h2>
+
             </div>
             <div className='flex items-center justify-evenly w-[90%] h-[5vh]  border-b mb-5'>
-                <Link to={'/Poi'}  className={`hover:cursor-pointer hover:font-bold`}>(POI)</Link>
-               <Link to={'/Poi/Categorias'}  className={`hover:cursor-pointer hover:font-bold`}>Categorias</Link>
+               <Link to={'/CidadesCategoria/newCidades'}  className={`hover:cursor-pointer font-bold`}>Base</Link>
+               <Link to={'/CidadesCategoria/Categoria'}  className={`hover:cursor-pointer hove:font-bold`}>Categoria</Link>
             </div>
-            <div className='flex flex-col items-center justify-evenly w-[100%]'>    
-                    <table className='w-[90%] max-h-[50vh] min-h-[15vh]'>
-                      <thead>
-                        <tr className=''>
-                          <th className='w-[23%]'>Nome</th>
-                          <th className='w-[23%]'>Data de inclusão</th>
-                          <th className='w-[31%]'>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {CategoriasStyled}
-                      </tbody>
-
-                    </table>   
+            <div className='flex flex-col items-center justify-evenly w-[100%]'>     
                     <div className='w-[90%] h-[10vh] flex  items-center '>
                         <div className='w-[30%] h-[6vh]'>
                             <input className={`w-[100%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !nome  ? styledInput : 'border-black'}`} placeholder='Nome' type="text" value={nome} onChange={(e) => setNome(e.target.value)}></input>
                             <p className={ campoFaltante === true && !nome  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
                         </div>
+                        <div className='w-[30%] h-[6vh] ml-[10%]'>
+                            <input className={`w-[100%] p-1 ml-[0%] h-[4vh] border ${ campoFaltante === true && !endereco  ? styledInput : 'border-black'}`} placeholder='Endereço' type="text" value={endereco} onChange={(e) => setEndereco(e.target.value)}></input>
+                            <p className={ campoFaltante === true && !endereco  ? 'w-[80%] text-red-500 ' : 'invisible h-0 w-0 '} >Campo Obrigatorio!</p>
+                        </div>
+                       
+                        <div className='w-[30%] h-[6vh] ml-[10%]'>
+
+                        <div className={`w-[80%] p-1 ml-[0%] h-[4vh] border border-black  bg-white  ${ campoFaltante === true && !categoriaId  ? styledInput : 'border-black'}`}>
+                              {/* Botão para abrir/fechar o dropdown */}
+                              <select onChange={handleSelectChange} className={`w-[100%] h-[100%] flex text-slate-400 `}>
+                                <option value="">Selecione um bairro</option>
+                                {CategoriaStyled}
+                              </select>
+                            </div>
+                            <p className={ campoFaltante === true && !categoriaId  ? 'w-[80%] text-red-500' : 'invisible h-0 w-0 '} >Campo Obrigatório!</p>
+                        </div>
                         <div className='w-[13%] ml-[8.5%]  h-[6vh]'>
-                             <button className='w-[100%] border border-[#70AD47]' onClick={createCategorias}>Incluir</button>
+                            <button className='w-[100%] border border-[#70AD47]' onClick={createPoi}>Salvar</button>
                         </div>
                     </div>  
             </div>
@@ -223,4 +212,4 @@ useEffect(() => {
   )
 }
 
-export default CategoriasScreen
+export default AddPoiScreen

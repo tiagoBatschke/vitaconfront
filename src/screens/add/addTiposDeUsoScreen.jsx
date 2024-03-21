@@ -37,7 +37,7 @@ const AddTiposDeUsoScreen = () => {
    
   function checkToken() {
 
-    axios.get('https://testevitacon-bd7d417ef875.herokuapp.com/api/check-token',  {
+    axios.get('http://127.0.0.1:8000/api/check-token',  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -99,7 +99,7 @@ function createCliente() {
     return;
   }
 
-  axios.post('https://testevitacon-bd7d417ef875.herokuapp.com/api/tiposDeUso', {
+  axios.post('http://127.0.0.1:8000/api/tiposDeUso', {
       nome: nome,
   }, {
       withCredentials: true,
