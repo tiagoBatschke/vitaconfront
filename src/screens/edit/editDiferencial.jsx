@@ -31,7 +31,7 @@ const EditDiferencial = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -68,7 +68,7 @@ const EditDiferencial = () => {
 
   function fetchDiferencial() {
 
-    axios.get(`http://127.0.0.1:8000/api/diferenciais/${id}`,  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/diferenciais/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -93,7 +93,7 @@ const EditDiferencial = () => {
     }
 
 
-    axios.put(`http://127.0.0.1:8000/api/diferenciais/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/diferenciais/${id}`, {
         nome: nome,
         area_comum: true
     }, {
