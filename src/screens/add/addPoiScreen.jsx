@@ -33,7 +33,7 @@ const AddPoiScreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -68,7 +68,7 @@ const AddPoiScreen = () => {
 
   function fetchCategoria() {
 
-    axios.get('http://127.0.0.1:8000/api/categorias',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -91,7 +91,7 @@ const AddPoiScreen = () => {
     }
 
 
-    axios.post('http://127.0.0.1:8000/api/pois', {
+    axios.post(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/pois`, {
         nome: nome,
         endereco: endereco, 
         categoria_id: categoriaId 
