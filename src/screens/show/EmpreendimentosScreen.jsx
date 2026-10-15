@@ -35,7 +35,7 @@ const EmpreendimentosScreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ const EmpreendimentosScreen = () => {
 
   function fetchEmpreendimentos() {
 
-    axios.get('http://127.0.0.1:8000/api/empreendimentos',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/empreendimentos`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -78,7 +78,7 @@ const EmpreendimentosScreen = () => {
 
   function deleteCidade(id) {
 
-    axios.delete(`http://127.0.0.1:8000/api/empreendimentos/${id}`,  {
+    axios.delete(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/empreendimentos/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
