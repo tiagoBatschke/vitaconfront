@@ -34,7 +34,7 @@ const EditCidadesScreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ const EditCidadesScreen = () => {
 
   function fetchCidade() {
 
-    axios.get(`http://127.0.0.1:8000/api/cidades/${id}`,  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/cidades/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -97,7 +97,7 @@ const EditCidadesScreen = () => {
     }
 
 
-    axios.put(`http://127.0.0.1:8000/api/cidades/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/cidades/${id}`, {
         nome: nome,
         uf: selectedUf,
         bairro: bairroId
@@ -146,7 +146,7 @@ useEffect(() => {
 
 function fetchBairros() {
 
-  axios.get('http://127.0.0.1:8000/api/bairros',  {
+  axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/bairros`,  {
     withCredentials: true,
       headers: {
           'Authorization': `Bearer ${token}`
