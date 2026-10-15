@@ -27,7 +27,7 @@ const CategoriasScreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -52,7 +52,7 @@ const CategoriasScreen = () => {
 
   function fetchCategorias() {
 
-    axios.get('http://127.0.0.1:8000/api/categorias',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ const CategoriasScreen = () => {
 
   function deleteBairro(id) {
 
-    axios.delete(`http://127.0.0.1:8000/api/categorias/${id}`,  {
+    axios.delete(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -106,7 +106,7 @@ useEffect(() => {
     }
 
 
-    axios.post('http://127.0.0.1:8000/api/categorias', {
+    axios.post(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias`, {
         nome: nome,
     }, {
         withCredentials: true,
