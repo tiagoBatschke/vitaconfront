@@ -65,7 +65,7 @@ const EditEmpreendimentosImagens = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -94,7 +94,7 @@ const EditEmpreendimentosImagens = () => {
 
   function fetchprojetos() {
 
-    axios.get('http://127.0.0.1:8000/api/projetos',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/projetos`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -111,7 +111,7 @@ const EditEmpreendimentosImagens = () => {
 }
   function fetchBairros() {
 
-    axios.get('http://127.0.0.1:8000/api/bairros',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/bairros`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -129,7 +129,7 @@ const EditEmpreendimentosImagens = () => {
 
   function fetchEmpreendimentos() {
 
-    axios.get(`http://127.0.0.1:8000/api/empreendimentos/${id}`,  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/empreendimentos/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -167,7 +167,7 @@ const EditEmpreendimentosImagens = () => {
 
   function fetchTiposDeUso() {
 
-    axios.get('http://127.0.0.1:8000/api/tiposDeUso',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/tiposDeUso`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -204,7 +204,7 @@ const EditEmpreendimentosImagens = () => {
     const imagensExistente = imagens ? imagens : [];
     const imagensAtualizadas = [...imagensExistente, ...novasImagens];
 
-    axios.put(`http://127.0.0.1:8000/api/empreendimentos/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/empreendimentos/${id}`, {
         nome: nome,
         endereco: endereco,
         aviso_legal: aviso,
