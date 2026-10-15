@@ -41,7 +41,7 @@ const EditProjetoscreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -67,7 +67,7 @@ const EditProjetoscreen = () => {
 
   function fetchClientes() {
 
-    axios.get('http://127.0.0.1:8000/api/clientes',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/clientes`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -85,7 +85,7 @@ const EditProjetoscreen = () => {
 
   function fetchProjetos() {
 
-    axios.get(`http://127.0.0.1:8000/api/projetos/${id}`,  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/projetos/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -125,7 +125,7 @@ const validateInputs = () => {
         return;
       }
     
-    axios.put(`http://127.0.0.1:8000/api/projetos/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/projetos/${id}`, {
       nome: nome,
       cliente_id: clienteId, 
       tipos: tipo,
