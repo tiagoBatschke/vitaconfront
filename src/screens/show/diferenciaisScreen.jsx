@@ -36,7 +36,7 @@ const DiferenciaisScreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ const DiferenciaisScreen = () => {
 
   function fetchtiposDeUso() {
 
-    axios.get('http://127.0.0.1:8000/api/diferenciais',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/diferenciais`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -78,7 +78,7 @@ const DiferenciaisScreen = () => {
 
   function deletetiposDeUso(id) {
 
-    axios.delete(`http://127.0.0.1:8000/api/diferenciais/${id}`,  {
+    axios.delete(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/diferenciais/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
