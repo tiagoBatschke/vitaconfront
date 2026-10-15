@@ -54,7 +54,7 @@ const EditEmpreendimentosVideos = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -81,7 +81,7 @@ const EditEmpreendimentosVideos = () => {
 
   function fetchEmpreendimentos() {
 
-    axios.get(`http://127.0.0.1:8000/api/empreendimentos/${id}`,  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/empreendimentos/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -139,7 +139,7 @@ const EditEmpreendimentosVideos = () => {
     const VideosExistente = Videos ? Videos : [];
     const VideosAtualizadas = [...VideosExistente, ...novosVideos];
 
-    axios.put(`http://127.0.0.1:8000/api/empreendimentos/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/empreendimentos/${id}`, {
         nome: nome,
         endereco: endereco,
         aviso_legal: aviso,
