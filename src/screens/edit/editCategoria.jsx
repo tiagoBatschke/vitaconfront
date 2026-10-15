@@ -30,7 +30,7 @@ const EditCategoria = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -56,7 +56,7 @@ const EditCategoria = () => {
 
   function fetchBairro() {
 
-    axios.get(`http://127.0.0.1:8000/api/categorias/${id}`,  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -94,7 +94,7 @@ const validateInputs = () => {
         return;
       }
     
-    axios.put(`http://127.0.0.1:8000/api/categorias/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias/${id}`, {
       nome: nome,
     }, {
         withCredentials: true,
