@@ -34,7 +34,7 @@ const EditPoiScreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ const EditPoiScreen = () => {
 
   function fetchCategoria() {
 
-    axios.get('http://127.0.0.1:8000/api/categorias',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -87,7 +87,7 @@ const EditPoiScreen = () => {
 
   function fetchPoi() {
 
-    axios.get(`http://127.0.0.1:8000/api/pois/${id}`,  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/pois/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -113,7 +113,7 @@ const EditPoiScreen = () => {
 
 
     
-    axios.put(`http://127.0.0.1:8000/api/pois/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/pois/${id}`, {
         nome: nome,
         endereco: endereco, 
         categoria_id: categoriaId 
