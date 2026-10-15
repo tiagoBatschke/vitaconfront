@@ -30,7 +30,7 @@ const [screen, setScreen] =useState('a')
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -61,7 +61,7 @@ const [screen, setScreen] =useState('a')
   const [styledInput, setStyledInput]=  useState('border-red-600 border-[2px]')
 
   const fetchCliente = () => {
-    axios.get(`http://127.0.0.1:8000/api/clientes/${id}`, {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/clientes/${id}`, {
       withCredentials: true,
       headers: {
         'Authorization': `Bearer ${token}`
@@ -101,7 +101,7 @@ const [screen, setScreen] =useState('a')
       return;
     }
   
-    axios.put(`http://127.0.0.1:8000/api/clientes/${id}`, {
+    axios.put(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/clientes/${id}`, {
       nome: nome,
       cnpj: cnpj,
       contato: contato,
