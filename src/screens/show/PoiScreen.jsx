@@ -35,7 +35,7 @@ const PoiScreen = () => {
    
   function checkToken() {
 
-    axios.get('http://127.0.0.1:8000/api/check-token',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/check-token`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -60,7 +60,7 @@ const PoiScreen = () => {
 
   function fetchPois() {
 
-    axios.get('http://127.0.0.1:8000/api/pois',  {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/pois`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
@@ -77,7 +77,7 @@ const PoiScreen = () => {
 
 function fetchCategoria(id) {
   return new Promise((resolve, reject) => {
-    axios.get(`http://127.0.0.1:8000/api/categorias/${id}`, {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/categorias/${id}`, {
       withCredentials: true,
       headers: {
         'Authorization': `Bearer ${token}`
@@ -95,7 +95,7 @@ function fetchCategoria(id) {
 
   function deletePoi(id) {
 
-    axios.delete(`http://127.0.0.1:8000/api/pois/${id}`,  {
+    axios.delete(`${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/pois/${id}`,  {
       withCredentials: true,
         headers: {
             'Authorization': `Bearer ${token}`
